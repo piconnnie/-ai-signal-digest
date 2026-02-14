@@ -1,0 +1,14 @@
+pydantic>=2.0
+sqlalchemy>=2.0
+requests
+beautifulsoup4
+arxiv
+apscheduler
+twilio
+openai
+google-generativeai
+python-dotenv
+tenacity
+pytest
+mnemonics
+flask

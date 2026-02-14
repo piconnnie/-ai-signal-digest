@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>{{ item.title }}</h3>
+                <a href="{{ item.url }}" target="_blank" class="text-muted">{{ item.url }}</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">{{ item.abstract_or_body }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> {{ item.source }}</li>
+                                <li class="list-group-item"><strong>Published:</strong> {{ item.published_at }}</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> {{ item.fetched_at }}</li>
+                                <li class="list-group-item"><strong>Authors:</strong> {{ item.authors }}</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> {{ item.relevance_label }}</li>
+                                <li class="list-group-item"><strong>Conf:</strong> {{ item.relevance_confidence }}</li>
+                                <li class="list-group-item"><strong>Priority:</strong> {{ item.priority_score }}</li>
+                                <li class="list-group-item"><strong>Reason:</strong> {{ item.relevance_reason }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if item.summary_headline %}
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>{{ item.summary_headline }}</h4>
+                <p><strong>TL;DR:</strong> {{ item.summary_tldr }}</p>
+                <ul>
+                    {% for h in item.summary_highlights %}
+                    <li>{{ h }}</li>
+                    {% endfor %}
+                </ul>
+                <p class="text-muted"><em>Why it matters: {{ item.summary_why_matters }}</em></p>
+                <hr>
+                <p><strong>Validation:</strong> {{ item.validation_status }}</p>
+                <p><strong>Delivery:</strong> {{ item.delivery_status }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

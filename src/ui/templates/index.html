@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <!-- Stats Cards -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Content</h5>
+                <h2 class="card-text">{{ stats.total }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Pending Relevance</h5>
+                <h2 class="card-text">{{ stats.pending_rel }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Relevant Items</h5>
+                <h2 class="card-text">{{ stats.relevant }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Synthesized</h5>
+                <h2 class="card-text">{{ stats.synthesized }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                Recent Activity
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Source</th>
+                            <th>Published</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in recent %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.title }}</td>
+                            <td><span class="badge bg-secondary">{{ item.source }}</span></td>
+                            <td>{{ item.published_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>
+                                {% if item.relevance_label == 'IRRELEVANT' %}
+                                <span class="badge bg-danger">Irrelevant</span>
+                                {% elif item.relevance_label %}
+                                <span class="badge bg-success">{{ item.relevance_label }}</span>
+                                {% else %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% endif %}
+                            </td>
+                            <td><a href="/item/{{ item.id }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
