@@ -1,18 +1,40 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from sqlalchemy import desc
 from src.core.database import SessionLocal, init_db
-from src.core.models import Content
+from src.core.models import Content, User
 from src.core.config import Config
 from src.main import run_pipeline
 import threading
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24) # Valid for MVP session handling
 
 # Ensure DB is ready
 init_db()
 
 def get_db_session():
     return SessionLocal()
+
+def get_lifecycle_status(item):
+    """
+    Determines the simplified status of an item.
+    """
+    if item.delivery_status == 'SENT':
+        return 'Delivered', 'success'
+    if item.validation_status == 'FAIL':
+        return 'Rejected', 'danger'
+    if item.validation_status == 'PASS':
+        return 'Ready', 'info'
+    if item.summary_headline:
+        return 'Synthesized', 'primary'
+    if item.relevance_label == 'IRRELEVANT':
+        return 'Irrelevant', 'secondary'
+    if item.relevance_label:
+        return 'Relevant', 'info' # But not yet synthesized
+    return 'Pending', 'warning'
+
+app.add_template_global(get_lifecycle_status, name='get_lifecycle_status')
 
 @app.route('/')
 def index():
@@ -36,16 +58,28 @@ def index():
     }
     return render_template('index.html', stats=stats, recent=recent_items)
 
-@app.route('/content')
+@app.route('/content/')
 def content_list():
     """List all content with filters."""
     filter_status = request.args.get('status', 'all')
-    
+    return content_list_filtered(filter_status)
+
+@app.route('/relevant/')
+def relevant_content():
+    return content_list_filtered('relevant')
+
+@app.route('/synthesized/')
+def synthesized_content():
+    return content_list_filtered('synthesized')
+
+def content_list_filtered(filter_status):
+    """Helper for filtered views."""
     with get_db_session() as db:
         query = db.query(Content).order_by(Content.fetched_at.desc())
         
         if filter_status == 'relevant':
-             query = query.filter(Content.relevance_label.notin_(['IRRELEVANT', None]))
+             # Explicitly exclude IRRELEVANT and NULL
+             query = query.filter(Content.relevance_label != 'IRRELEVANT', Content.relevance_label.isnot(None))
         elif filter_status == 'synthesized':
              query = query.filter(Content.summary_headline.isnot(None))
         elif filter_status == 'pending':
@@ -55,7 +89,7 @@ def content_list():
         
     return render_template('content.html', items=items, filter=filter_status)
 
-@app.route('/item/<int:item_id>')
+@app.route('/item/<int:item_id>/')
 def content_detail(item_id):
     with get_db_session() as db:
         item = db.query(Content).get(item_id)
@@ -73,6 +107,34 @@ def trigger_pipeline():
         
     thread = threading.Thread(target=run_job)
     thread.start()
+    return redirect(url_for('index'))
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe_user():
+    phone = request.form.get('phone')
+    if not phone:
+        return "Phone number required", 400
+    
+    # Basic normalization (MVP)
+    phone = phone.strip().replace(" ", "").replace("-", "")
+    
+    with get_db_session() as db:
+        existing = db.query(User).filter(User.phone_number == phone).first()
+        if not existing:
+            new_user = User(phone_number=phone, opt_in_status=True)
+            db.add(new_user)
+            db.commit()
+            print(f"New subscriber: {phone}")
+            flash("Subscribed successfully! You will receive daily digests at 9 AM.", "success")
+        else:
+             print(f"Subscriber already exists: {phone}")
+             if not existing.opt_in_status:
+                 existing.opt_in_status = True
+                 db.commit()
+                 flash("Welcome back! You have re-subscribed.", "success")
+             else:
+                 flash("You are already subscribed.", "info")
+
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

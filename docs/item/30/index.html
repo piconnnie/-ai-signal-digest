@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>ScreenAI: A visual language model for UI and visually-situated language understanding</h3>
+                <a href="http://blog.research.google/2024/03/screenai-visual-language-model-for-ui.html" target="_blank" class="text-muted">http://blog.research.google/2024/03/screenai-visual-language-model-for-ui.html</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">&lt;span class=&#34;byline-author&#34;&gt;Posted by Srinivas Sunkara and Gilles Baechler, Software Engineers, Google Research&lt;/span&gt;
+
+
+&lt;img src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoXlMR7pAKRRnyKZT8C40i6mPX0KKNGT6AFNvFOFIhZ7BD0rXaU3NS_aqISTGq9S_d0zozgcO0HR_v3R6Msm4uUDkaBFsFVx-miaDL6L0UhSz1Is8_L_iFjtvNE5OX9HX98t92b3r-rLQfJG1RrzVW354NdVUlIJVRLdQ_l4dFYa1773J-tJligdvh7QsX/s320/ScreenAI%20-%20hero.jpeg&#34; style=&#34;display: none;&#34; /&gt;
+
+&lt;p&gt;
+Screen user interfaces (UIs) and infographics, such as charts, diagrams and tables, play important roles in human communication and human-machine interaction as they facilitate rich and interactive user experiences. UIs and infographics share similar design principles and visual language (e.g., icons and layouts), that offer an opportunity to build a single model that can understand, reason, and interact with these interfaces. However, because of their complexity and varied presentation formats, infographics and UIs present a unique modeling challenge.
+&lt;/p&gt;
+&lt;a name=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;p&gt;
+To that end, we introduce “&lt;a href=&#34;https://arxiv.org/abs/2402.04615&#34;&gt;ScreenAI: A Vision-Language Model for UI and Infographics Understanding&lt;/a&gt;”. ScreenAI improves upon the &lt;a href=&#34;https://arxiv.org/abs/2305.18565&#34;&gt;PaLI architecture&lt;/a&gt; with the flexible patching strategy from &lt;a href=&#34;https://arxiv.org/abs/2210.03347&#34;&gt;pix2struct&lt;/a&gt;. We train ScreenAI on a unique mixture of datasets and tasks, including a novel Screen Annotation task that requires the model to identify UI element information (i.e., type, location and description) on a screen. These text annotations provide large language models (LLMs) with screen descriptions, enabling them to automatically generate question-answering (QA), UI navigation, and summarization training datasets at scale. At only 5B parameters, ScreenAI achieves state-of-the-art results on UI- and infographic-based tasks (&lt;a href=&#34;https://x-lance.github.io/WebSRC/&#34;&gt;WebSRC&lt;/a&gt; and &lt;a href=&#34;https://github.com/aburns4/MoTIF&#34;&gt;MoTIF&lt;/a&gt;), and best-in-class performance on &lt;a href=&#34;https://github.com/vis-nlp/ChartQA&#34;&gt;Chart QA&lt;/a&gt;, &lt;a href=&#34;https://rrc.cvc.uab.es/?ch=17&amp;amp;com=evaluation&amp;amp;task=1&#34;&gt;DocVQA&lt;/a&gt;, and &lt;a href=&#34;https://arxiv.org/abs/2104.12756&#34;&gt;InfographicVQA&lt;/a&gt; compared to models of similar size. We are also releasing three new datasets: &lt;a href=&#34;https://github.com/google-research-datasets/screen_qa?tab=readme-ov-file#screen-annotation-dataset-details&#34;&gt;Screen Annotation&lt;/a&gt; to evaluate the layout understanding capability of the model, as well as &lt;a href=&#34;https://github.com/google-research-datasets/screen_qa/tree/main?tab=readme-ov-file#short_answers-directory&#34;&gt;ScreenQA Short&lt;/a&gt; and &lt;a href=&#34;https://github.com/google-research-datasets/screen_qa?tab=readme-ov-file#complexqa&#34; target=&#34;_blank&#34;&gt;Complex ScreenQA&lt;/a&gt; for a more comprehensive evaluation of its QA capability. 
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;ScreenAI&lt;/h2&gt;
+
+
+&lt;p&gt;
+ScreenAI’s architecture is based on &lt;a href=&#34;https://arxiv.org/abs/2209.06794&#34;&gt;PaLI&lt;/a&gt;, composed of a multimodal encoder block and an autoregressive decoder. The PaLI encoder uses a &lt;a href=&#34;https://arxiv.org/abs/2010.11929&#34;&gt;vision transformer&lt;/a&gt; (ViT) that creates image embeddings and a multimodal encoder that takes the concatenation of the image and text embeddings as input. This flexible architecture allows ScreenAI to solve vision tasks that can be recast as text+image-to-text problems. 
+&lt;/p&gt;
+
+&lt;p&gt;
+On top of the PaLI architecture, we employ a flexible patching strategy introduced in pix2struct. Instead of using a fixed-grid pattern, the grid dimensions are selected such that they preserve the native aspect ratio of the input image. This enables ScreenAI to work well across images of various aspect ratios. 
+&lt;/p&gt;
+
+&lt;p&gt;
+The ScreenAI model is trained in two stages: a pre-training stage followed by a fine-tuning stage. First, self-supervised learning is applied to automatically generate data labels, which are then used to train ViT and the language model. ViT is frozen during the fine-tuning stage, where most data used is manually labeled by human raters. 
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjS1qatfLUw6BZZgkPxrv0Hx1pAPAehiF8q3kfA0BUyyPx4XXpwZRr75nYl99fTIQwLNmOHXhSBbpzHDnw6yQXZls1ZV-IE-d75jP5M02cRSZTYuU8FJBS4mubPzUPIuvcj_oqkEJcWtNWtnLmPZ3P1jJlDmc8GA1WNq00jUwl2o8gfLIIXlknrjy4z6y7Y/s1600/image6.gif&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjS1qatfLUw6BZZgkPxrv0Hx1pAPAehiF8q3kfA0BUyyPx4XXpwZRr75nYl99fTIQwLNmOHXhSBbpzHDnw6yQXZls1ZV-IE-d75jP5M02cRSZTYuU8FJBS4mubPzUPIuvcj_oqkEJcWtNWtnLmPZ3P1jJlDmc8GA1WNq00jUwl2o8gfLIIXlknrjy4z6y7Y/s16000/image6.gif&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;ScreenAI model architecture.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br /&gt;
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Data generation&lt;/h2&gt;
+
+
+&lt;p&gt;
+To create a pre-training dataset for ScreenAI, we first compile an extensive collection of screenshots from various devices, including desktops, mobile, and tablets. This is achieved by using &lt;a href=&#34;https://arxiv.org/abs/1910.10683&#34; target=&#34;_blank&#34;&gt;publicly accessible web pages&lt;/a&gt; and following the programmatic exploration approach used for the &lt;a href=&#34;https://dl.acm.org/doi/10.1145/3126594.3126651&#34; target=&#34;_blank&#34;&gt;RICO dataset&lt;/a&gt; for mobile apps. We then apply a layout annotator, based on the &lt;a href=&#34;https://arxiv.org/abs/2005.12872&#34; target=&#34;_blank&#34;&gt;DETR&lt;/a&gt; model, that identifies and labels a wide range of UI elements (e.g., image, pictogram, button, text) and their spatial relationships. Pictograms undergo further analysis using an &lt;a href=&#34;https://arxiv.org/abs/2210.02663&#34; target=&#34;_blank&#34;&gt;icon classifier&lt;/a&gt; capable of distinguishing 77 different icon types. This detailed classification is essential for interpreting the subtle information conveyed through icons. For icons that are not covered by the classifier, and for infographics and images, we use the PaLI image captioning model to generate descriptive captions that provide contextual information. We also apply an &lt;a href=&#34;https://cloud.google.com/use-cases/ocr&#34; target=&#34;_blank&#34;&gt;optical character recognition&lt;/a&gt; (OCR) engine to extract and annotate textual content on screen. We combine the OCR text with the previous annotations to create a detailed description of each screen.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_wzxsb1U_PH17m3dG92ny7PpJjIYK39k1NQme1i5GM63tAd_OGdxMAV2_OQQVQSdkdyY1Tb3s8ibI2M3Kp1VpdNMsBr0ugBcBdL_r6dUwOwdfJfBMn3ae9Zl3zM2IpfZV654DFybMhMLimy0cuUNsnU5L8O2byu9eHmhdWcIvsb1t8AWi-tKNkXFq7Neo/s1747/image2.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_wzxsb1U_PH17m3dG92ny7PpJjIYK39k1NQme1i5GM63tAd_OGdxMAV2_OQQVQSdkdyY1Tb3s8ibI2M3Kp1VpdNMsBr0ugBcBdL_r6dUwOwdfJfBMn3ae9Zl3zM2IpfZV654DFybMhMLimy0cuUNsnU5L8O2byu9eHmhdWcIvsb1t8AWi-tKNkXFq7Neo/s16000/image2.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;A mobile app screenshot with generated annotations that include UI elements and their descriptions, e.g., &lt;code&gt;TEXT&lt;/code&gt; elements also contain the text content from OCR, &lt;code&gt;IMAGE&lt;/code&gt; elements contain image captions, &lt;code&gt;LIST_ITEMs&lt;/code&gt; contain all their child elements.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;br /&gt;
+
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h3&gt;LLM-based data generation&lt;/h3&gt;
+
+
+&lt;p&gt;
+We enhance the pre-training data&#39;s diversity using &lt;a href=&#34;https://blog.google/technology/ai/google-palm-2-ai-large-language-model/&#34;&gt;PaLM 2&lt;/a&gt; to generate input-output pairs in a two-step process. First, screen annotations are generated using the technique outlined above, then we craft a prompt around this schema for the LLM to create synthetic data. This process requires prompt engineering and iterative refinement to find an effective prompt. We assess the generated data&#39;s quality through human validation against a quality threshold. 
+&lt;/p&gt;
+
+
+&lt;br /&gt;
+&lt;pre class=&#34;prettyprint&#34; style=&#34;margin-left: 40px; margin-right: 40px; white-space: pre-wrap;&#34;&gt;&lt;font color=&#34;#008000&#34;&gt;You only speak JSON. Do not write text that isn’t JSON.
+You are given the following mobile screenshot, described in words. Can you generate 5 questions regarding the content of the screenshot as well as the corresponding short answers to them? 
+
+The answer should be as short as possible, containing only the necessary information. Your answer should be structured as follows:
+questions: [
+{{question: the question,
+    answer: the answer
+}},
+ ...
+]
+
+{THE SCREEN SCHEMA}
+&lt;/font&gt;&lt;/pre&gt;
+&lt;br /&gt;
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;A sample prompt for QA data generation.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+By combining the natural language capabilities of LLMs with a structured schema, we simulate a wide range of user interactions and scenarios to generate synthetic, realistic tasks. In particular, we generate three categories of tasks:
+&lt;/p&gt;
+
+&lt;ul&gt;
+
+&lt;li&gt;&lt;strong&gt;Question answering&lt;/strong&gt;: The model is asked to answer questions regarding the content of the screenshots, e.g., “When does the restaurant open?”
+
+&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Screen navigation&lt;/strong&gt;: The model is asked to convert a natural language utterance into an executable action on a screen, e.g., “Click the search button.”
+
+&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Screen summarization&lt;/strong&gt;: The model is asked to summarize the screen content in one or two sentences. 
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiinxXWrVJQr3tZJ4-o3ipkdJriUqTRbi2CFWor4I2SpyMiswx6uZOM2ZJW0gZC75MXYshkjXPABvDuSnhR44ceNwDpkvaSLa4R3v4C-hEsnHdEc-JUUx31zZmDHDDwhWaMDqnD0wo6ibt7qBZfaYN_yx1myH77k-ruO9fjd33SiLnP0jLnjOfmhdEHbsR7/s1398/image3.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiinxXWrVJQr3tZJ4-o3ipkdJriUqTRbi2CFWor4I2SpyMiswx6uZOM2ZJW0gZC75MXYshkjXPABvDuSnhR44ceNwDpkvaSLa4R3v4C-hEsnHdEc-JUUx31zZmDHDDwhWaMDqnD0wo6ibt7qBZfaYN_yx1myH77k-ruO9fjd33SiLnP0jLnjOfmhdEHbsR7/s16000/image3.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Block diagram of our workflow for generating data for QA, summarization and navigation tasks using existing ScreenAI models and LLMs. Each task uses a custom prompt to emphasize desired aspects, like questions related to counting, involving reasoning, etc.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br /&gt;
+
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;img height=&#34;540&#34; src=&#34;https://lh7-us.googleusercontent.com/LmUtXBMXK-zy_rMShHQ_Hk4vQeXu2Kpx8zfzjhE3uAREczbkbGTEjZ7OMTbqtB37lD4rF31xJsoWdVXNAXLbbM1Uc_01WZWmOfBg9RwyAUEToPpa1W38Pt117Zj5LrNfnxXqjXoAJDZd-zcAIgU4QSoBaAKsIrSi8_POI14F5hguN1NJL9a2RsrKg6WHz7w&#34; style=&#34;margin-left: auto; margin-right: auto; margin-top: 0px;&#34; width=&#34;705&#34; /&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;LLM-generated data. Examples for screen QA, navigation and summarization. For navigation, the action bounding box is displayed in red on the screenshot.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br /&gt;
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Experiments and results&lt;/h2&gt;
+
+
+&lt;p&gt;
+As previously mentioned, ScreenAI is trained in two stages: pre-training and fine-tuning. Pre-training data labels are obtained using self-supervised learning and fine-tuning data labels comes from human raters. 
+&lt;/p&gt;
+
+&lt;p&gt;
+We fine-tune ScreenAI using public QA, summarization, and navigation datasets and a variety of tasks related to UIs. For QA, we use well established benchmarks in the multimodal and document understanding field, such as &lt;a href=&#34;https://github.com/vis-nlp/ChartQA&#34;&gt;ChartQA&lt;/a&gt;, &lt;a href=&#34;https://rrc.cvc.uab.es/?ch=17&amp;amp;com=evaluation&amp;amp;task=1&#34;&gt;DocVQA&lt;/a&gt;, &lt;a href=&#34;https://rrc.cvc.uab.es/?ch=17&amp;amp;com=tasks&#34;&gt;Multi page DocVQA&lt;/a&gt;, &lt;a href=&#34;https://arxiv.org/abs/2104.12756&#34;&gt;InfographicVQA&lt;/a&gt;, &lt;a href=&#34;https://ocr-vqa.github.io/&#34;&gt;OCR VQA&lt;/a&gt;, &lt;a href=&#34;https://x-lance.github.io/WebSRC/&#34;&gt;Web SRC&lt;/a&gt; and &lt;a href=&#34;https://github.com/google-research-datasets/screen_qa&#34;&gt;ScreenQA&lt;/a&gt;. For navigation, datasets used include &lt;a href=&#34;https://github.com/google-research-datasets/uibert/tree/main&#34;&gt;Referring Expressions&lt;/a&gt;, &lt;a href=&#34;https://github.com/aburns4/MoTIF&#34;&gt;MoTIF&lt;/a&gt;, &lt;a href=&#34;https://arxiv.org/abs/2209.15099&#34;&gt;Mug&lt;/a&gt;, and &lt;a href=&#34;https://github.com/google-research/google-research/tree/master/android_in_the_wild&#34;&gt;Android in the Wild&lt;/a&gt;. Finally, we use &lt;a href=&#34;https://github.com/google-research-datasets/screen2words&#34;&gt;Screen2Words&lt;/a&gt; for screen summarization and &lt;a href=&#34;https://paperswithcode.com/paper/widget-captioning-generating-natural-language/review/&#34;&gt;Widget Captioning&lt;/a&gt; for describing specific UI elements. Along with the fine-tuning datasets, we  evaluate the fine-tuned ScreenAI model using three novel benchmarks:
+&lt;/p&gt;
+
+&lt;ol&gt;
+
+&lt;li&gt;Screen Annotation: Enables the evaluation model layout annotations and spatial understanding capabilities.
+
+&lt;/li&gt;&lt;li&gt;ScreenQA Short: A variation of ScreenQA, where its ground truth answers have been shortened to contain only the relevant information that better aligns with other QA tasks.
+
+&lt;/li&gt;&lt;li&gt;Complex ScreenQA: Complements ScreenQA Short with more difficult questions (counting, arithmetic, comparison, and non-answerable questions) and contains screens with various aspect ratios.
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+The fine-tuned ScreenAI model achieves state-of-the-art results on various UI and infographic-based tasks (&lt;a href=&#34;https://x-lance.github.io/WebSRC/&#34;&gt;WebSRC&lt;/a&gt; and &lt;a href=&#34;https://github.com/aburns4/MoTIF&#34;&gt;MoTIF&lt;/a&gt;) and best-in-class performance on &lt;a href=&#34;https://github.com/vis-nlp/ChartQA&#34;&gt;Chart QA&lt;/a&gt;, &lt;a href=&#34;https://rrc.cvc.uab.es/?ch=17&amp;amp;com=evaluation&amp;amp;task=1&#34;&gt;DocVQA&lt;/a&gt;, and &lt;a href=&#34;https://arxiv.org/abs/2104.12756&#34;&gt;InfographicVQA&lt;/a&gt; compared to models of similar size. ScreenAI achieves competitive performance on Screen2Words and OCR-VQA. Additionally, we report results on the new benchmark datasets introduced to serve as a baseline for further research.
+&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijJAw824LdVbrFU3c7oerx9Ik86dWnuQ2NqliLpUZLp6U-9pDxZKsw10VSMfYOSwns-GWJRdSCj3UmyxytOZxfoM64psBSKCjLYa-3zkXDt8mGvFbNpydwS1Ya2dhDeYfihWL1mVCyTWIzdgfblxawoxukWW1vLLwfNWMNKQ64B8wUM5SlNKgegdGxXlr7/s1183/image2.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijJAw824LdVbrFU3c7oerx9Ik86dWnuQ2NqliLpUZLp6U-9pDxZKsw10VSMfYOSwns-GWJRdSCj3UmyxytOZxfoM64psBSKCjLYa-3zkXDt8mGvFbNpydwS1Ya2dhDeYfihWL1mVCyTWIzdgfblxawoxukWW1vLLwfNWMNKQ64B8wUM5SlNKgegdGxXlr7/s16000/image2.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Comparing model performance of ScreenAI with state-of-the-art (SOTA) models of similar size.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+
+&lt;p&gt;
+Next, we examine ScreenAI’s scaling capabilities and observe that across all tasks, increasing the model size improves performances and the improvements have not saturated at the largest size.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKNMvTyz1RhM0wqgn7eAGB9Lev3YUhKhHrcAmJt3SB1Gi6ozIaxHoPzAj-bm6II-_91viG2FXrfNZiiwSSI_YNQGwKGyO6YkAW05Cfl9oys869f7DMyJcthlj6c0CLwzMAGP8HM9AmxdCK92d4PL2Ujz-tI4CZsQOlzlecMLgElWBjl9FZtj-zWIWata2k/s1999/image1.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKNMvTyz1RhM0wqgn7eAGB9Lev3YUhKhHrcAmJt3SB1Gi6ozIaxHoPzAj-bm6II-_91viG2FXrfNZiiwSSI_YNQGwKGyO6YkAW05Cfl9oys869f7DMyJcthlj6c0CLwzMAGP8HM9AmxdCK92d4PL2Ujz-tI4CZsQOlzlecMLgElWBjl9FZtj-zWIWata2k/s16000/image1.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Model performance increases with size, and the performance has not saturated even at the largest size of 5B params.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;br /&gt;
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+
+&lt;p&gt;
+We introduce the ScreenAI model along with a unified representation that enables us to develop self-supervised learning tasks leveraging data from all these domains. We also illustrate the impact of data generation using LLMs and investigate improving model performance on specific aspects with modifying the training mixture. We apply all of these techniques to build multi-task trained models that perform competitively with state-of-the-art approaches on a number of public benchmarks. However, we also note that our approach still lags behind large models and further research is needed to bridge this gap.
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+
+
+&lt;p&gt;
+&lt;em&gt;This project is the result of joint work with Maria Wang, Fedir Zubach, Hassan Mansoor, Vincent Etter, Victor Carbune, Jason Lin, Jindong Chen and Abhanshu Sharma. We thank Fangyu Liu, Xi Chen, Efi Kokiopoulou, Jesse Berent, Gabriel Barcik, Lukas Zilka, Oriana Riva, Gang Li,Yang Li, Radu Soricut, and Tania Bedrax-Weiss for their insightful feedback and discussions, along with Rahul Aralikatte, Hao Cheng and Daniel Kim for their support in data preparation. We also thank Jay Yagnik, Blaise Aguera y Arcas, Ewa Dominowska, David Petrou, and Matt Sharifi for their leadership, vision and support. We are very grateful toTom Small for helping us create the animation in this post.&lt;/em&gt;
+&lt;/p&gt;</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> Google AI Blog</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2024-03-19 20:15:00</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 09:32:46.522136</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Google AI (noreply@blogger.com)&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of ScreenAI: A visual l...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

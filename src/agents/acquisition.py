@@ -1,6 +1,7 @@
 import time
 import arxiv
 import requests
+import feedparser
 from datetime import datetime, timedelta
 from typing import List
 from sqlalchemy.orm import Session
@@ -10,17 +11,27 @@ from src.agents.base import BaseAgent
 
 class ContentAcquisitionAgent(BaseAgent):
     """
-    Fetches content from configured sources (arXiv, News) and stores 'RawContent' in DB.
+    Fetches content from configured sources (arXiv, RSS Feeds) and stores 'RawContent' in DB.
     Deduplicates based on URL.
     """
     
     ARXIV_CATEGORIES = ["cs.AI", "cs.CL", "cs.LG", "stat.ML"]
     
+    # High-signal engineering blogs
+    RSS_FEEDS = [
+        {"name": "OpenAI Blog", "url": "https://openai.com/blog/rss.xml", "type": "blog"},
+        {"name": "Anthropic Blog", "url": "https://www.anthropic.com/index.xml", "type": "blog"},
+        {"name": "Google AI Blog", "url": "http://googleaiblog.blogspot.com/atom.xml", "type": "blog"},
+        {"name": "AWS Machine Learning", "url": "https://aws.amazon.com/blogs/machine-learning/feed/", "type": "blog"},
+        {"name": "Meta AI Blog", "url": "https://ai.meta.com/blog/rss.xml", "type": "blog"},
+        {"name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml", "type": "blog"},
+    ]
+    
     def _execute(self):
         """
         Main execution flow:
         1. Fetch X latest papers from arXiv.
-        2. (Future) Fetch news.
+        2. Fetch latest posts from RSS feeds.
         3. Deduplicate and store.
         """
         self.logger.info("Starting Content Acquisition...")
@@ -38,11 +49,14 @@ class ContentAcquisitionAgent(BaseAgent):
             except Exception as e:
                 self.logger.error(f"Failed to fetch arXiv: {e}")
             
-            # --- 2. Fetch News (Placeholder for now) ---
-            # news_items = self.fetch_news()
-            # for item in news_items:
-            #     if self.save_content(db, item):
-            #         new_count += 1
+            # --- 2. Fetch RSS Feeds ---
+            try:
+                rss_items = self.fetch_rss_feeds()
+                for item in rss_items:
+                    if self.save_content(db, item):
+                        new_count += 1
+            except Exception as e:
+                self.logger.error(f"Failed to fetch RSS feeds: {e}")
 
             db.commit()
             self.logger.info(f"Acquisition complete. Saved {new_count} new items.")
@@ -65,20 +79,71 @@ class ContentAcquisitionAgent(BaseAgent):
         client = arxiv.Client()
         
         for result in client.results(search):
-            # Check if published in last 24h? Or just rely on DB dedup? 
-            # Rely on DB dedup for simplicity + "fetching content newer than last run" logic 
-            # is implicitly handled by "max_results" + deduplication.
-            
             results.append({
                 "source": "arxiv",
                 "type": "research",
                 "title": result.title,
-                "url": result.pdf_url, # Or result.entry_id
+                "url": result.pdf_url, # Prioritize PDF
                 "published_at": result.published,
                 "abstract_or_body": result.summary,
                 "authors": [a.name for a in result.authors]
             })
         
+        return results
+
+    def fetch_rss_feeds(self) -> List[dict]:
+        """
+        Fetch items from configured RSS feeds.
+        """
+        results = []
+        for feed_config in self.RSS_FEEDS:
+            try:
+                self.logger.info(f"Fetching RSS: {feed_config['name']}")
+                feed = feedparser.parse(feed_config['url'])
+                
+                # Check for bozo error (malformed feed)
+                if feed.bozo:
+                    self.logger.warning(f"Malformated feed {feed_config['name']}: {feed.bozo_exception}")
+                    # Continue anyway as feedparser often parses partially valid feeds
+
+                # Process entries (limit to 5 per feed to avoid spamming)
+                for entry in feed.entries[:5]: 
+                    
+                    # Parse Date
+                    published_at = datetime.utcnow()
+                    if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                         published_at = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+                    elif hasattr(entry, 'updated_parsed') and entry.updated_parsed:
+                         published_at = datetime.fromtimestamp(time.mktime(entry.updated_parsed))
+                    
+                    # Extract Summary
+                    summary = ""
+                    if hasattr(entry, 'summary'):
+                        summary = entry.summary
+                    elif hasattr(entry, 'description'):
+                        summary = entry.description
+                    elif hasattr(entry, 'content'):
+                        # Atom feeds often have content list
+                        summary = entry.content[0].value
+                    
+                    # Extract Author
+                    author = "Unknown"
+                    if hasattr(entry, 'author'):
+                        author = entry.author
+                    
+                    results.append({
+                        "source": feed_config['name'],
+                        "type": feed_config['type'],
+                        "title": entry.title,
+                        "url": entry.link,
+                        "published_at": published_at,
+                        "abstract_or_body": summary,
+                        "authors": [author] # Adapter for schema
+                    })
+                    
+            except Exception as e:
+                self.logger.error(f"Error fetching {feed_config['name']}: {e}")
+                
         return results
 
     def save_content(self, db: Session, item: dict) -> bool:
@@ -88,7 +153,7 @@ class ContentAcquisitionAgent(BaseAgent):
         """
         exists = db.query(Content).filter(Content.url == item["url"]).first()
         if exists:
-            self.logger.debug(f"Duplicate content skipped: {item['url']}")
+            # self.logger.debug(f"Duplicate content skipped: {item['url']}")
             return False
         
         new_content = Content(

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>Computer-aided diagnosis for lung cancer screening</h3>
+                <a href="http://blog.research.google/2024/03/computer-aided-diagnosis-for-lung.html" target="_blank" class="text-muted">http://blog.research.google/2024/03/computer-aided-diagnosis-for-lung.html</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">&lt;span class=&#34;byline-author&#34;&gt;Posted by Atilla Kiraly, Software Engineer, and Rory Pilgrim, Product Manager, Google Research &lt;/span&gt;
+
+
+&lt;img src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFpuCd82OUmuS2oG2cVir_ZgeOyUpFndr-kCq8V4pDv6fzxeyViBJymfVt5FFUqgkM_X57msxNv84XBtaXs2FsD7R8_tNqtH6D8X_KiMtZRaJ37JphQsvM35_gIk-4Tn2eEYvrInjMLV5ouwhRJv3Oqb30Z71P546NszeURINBoJnlWnzgASn-6D9YFwZo/s320/PULMA%20hero.jpg&#34; style=&#34;display: none;&#34; /&gt;
+
+&lt;p&gt;
+Lung cancer is the leading cause of cancer-related deaths globally with &lt;a href=&#34;https://www.who.int/news-room/fact-sheets/detail/cancer#:~:text=The%20most%20common%20causes%20of,rectum%20(916%20000%20deaths)%3B&#34;&gt;1.8 million deaths&lt;/a&gt; reported in 2020. Late diagnosis dramatically reduces the chances of survival. &lt;a href=&#34;https://www.cdc.gov/cancer/lung/basic_info/screening.htm&#34;&gt;Lung cancer screening&lt;/a&gt; via &lt;a href=&#34;https://www.cancer.gov/about-cancer/diagnosis-staging/ct-scans-fact-sheet#:~:text=indicate%20real%20problems.-,Lung%20cancer,-Low%2Ddose%20CT&#34;&gt;computed tomography&lt;/a&gt; (CT), which provides a detailed 3D image of the lungs, has been shown to reduce mortality in high-risk populations by at least 20% by detecting potential signs of cancers earlier. In the US, screening involves annual scans, with some countries or cases recommending more or less frequent scans. 
+&lt;/p&gt;
+&lt;a name=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;p&gt;
+The &lt;a href=&#34;https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/lung-cancer-screening&#34;&gt;United States Preventive Services Task Force&lt;/a&gt; recently expanded lung cancer screening recommendations by &lt;a href=&#34;https://pubmed.ncbi.nlm.nih.gov/34636916/&#34;&gt;roughly 80%&lt;/a&gt;, which is expected to increase screening access for women and racial and ethnic minority groups. However, false positives (i.e., incorrectly reporting a potential cancer in a cancer-free patient) can cause anxiety and lead to unnecessary procedures for patients while increasing costs for the healthcare system. Moreover, efficiency in screening a large number of individuals can be challenging depending on healthcare infrastructure and radiologist availability.
+&lt;/p&gt;
+
+
+&lt;p&gt;
+At Google we have previously developed &lt;a href=&#34;https://blog.google/technology/health/lung-cancer-prediction/&#34;&gt;machine learning (ML) models for lung cancer detection&lt;/a&gt;, and have evaluated their ability to automatically detect and classify regions that show signs of potential cancer. Performance has been shown to be comparable to that of specialists in detecting possible cancer. While they have achieved high performance, effectively communicating findings in realistic environments is necessary to realize their full potential.
+&lt;/p&gt;
+
+&lt;p&gt;
+To that end, in “&lt;a href=&#34;https://pubs.rsna.org/doi/10.1148/ryai.230079&#34;&gt;Assistive AI in Lung Cancer Screening: A Retrospective Multinational Study in the US and Japan&lt;/a&gt;”, published in &lt;em&gt;&lt;a href=&#34;https://pubs.rsna.org/journal/ai&#34;&gt;Radiology AI&lt;/a&gt;&lt;/em&gt;, we investigate how ML models can effectively communicate findings to radiologists. We also introduce a generalizable user-centric interface to help radiologists leverage such models for lung cancer screening. The system takes CT imaging as input and outputs a cancer suspicion rating using four categories (no suspicion, probably benign, suspicious, highly suspicious) along with the corresponding regions of interest. We evaluate the system’s utility in improving clinician performance through randomized reader studies in both the US and Japan, using the local cancer scoring systems (&lt;a href=&#34;https://www.acr.org/-/media/ACR/Files/RADS/Lung-RADS/LungRADSAssessmentCategoriesv1-1.pdf&#34;&gt;Lung-RADSs V1.1&lt;/a&gt; and &lt;a href=&#34;https://www.jscts.org/pdf/guideline/gls3rdfig_english130621.pdf&#34;&gt;Sendai Score&lt;/a&gt;) and image viewers that mimic realistic settings. We found that reader specificity increases with model assistance in both reader studies. To accelerate progress in conducting similar studies with ML models, we have &lt;a href=&#34;https://github.com/Google-Health/google-health/tree/master/ct_dicom&#34;&gt;open-sourced code&lt;/a&gt; to process CT images and generate images compatible with the &lt;a href=&#34;https://en.wikipedia.org/wiki/Picture_archiving_and_communication_system&#34;&gt;picture archiving and communication system&lt;/a&gt; (PACS) used by radiologists. 
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Developing an interface to communicate model results&lt;/h2&gt;
+
+
+&lt;p&gt;
+Integrating ML models into radiologist workflows involves understanding the nuances and goals of their tasks to meaningfully support them. In the case of lung cancer screening, hospitals follow various country-specific guidelines that are regularly updated. For example, in the US, Lung-RADs V1.1 assigns an &lt;a href=&#34;https://www.acr.org/-/media/ACR/Files/RADS/Lung-RADS/LungRADSAssessmentCategoriesv1-1.pdf&#34;&gt;alpha-numeric score&lt;/a&gt; to indicate the lung cancer risk and follow-up recommendations&lt;em&gt;. &lt;/em&gt;When assessing patients, radiologists load the CT in their workstation to read the case, find lung nodules or lesions, and apply set guidelines to determine follow-up decisions. 
+&lt;/p&gt;
+
+
+&lt;p&gt;
+Our first step was to improve the &lt;a href=&#34;https://blog.google/technology/health/lung-cancer-prediction/&#34;&gt;previously developed ML models&lt;/a&gt; through additional training data and architectural improvements, including &lt;a href=&#34;https://research.google/pubs/attention-is-all-you-need/&#34;&gt;self-attention&lt;/a&gt;. Then, instead of targeting specific guidelines, we experimented with a complementary way of communicating AI results independent of guidelines or their particular versions. Specifically, the system output offers a suspicion rating and localization (regions of interest) for the user to consider in conjunction with their own specific guidelines. The interface produces output images directly associated with the CT study, requiring no changes to the user’s workstation. The radiologist only needs to review a small set of additional images. There is no other change to their system or interaction with the system.
+&lt;/p&gt;
+
+
+&lt;p&gt;
+
+
+&lt;/p&gt;&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiChGqKLOWQAzrIzk294q6i6XuUoR1ul0qoTAR8RHQw-bZT-ulyruug-HNY8f2em7ZgzHE1UP6yQbe4plM0gkmXu6KwcTmsNogbr6FjTGzSDrBEDFhVLQ4TdbxVp_bbB21gA_jR84-1r9ly-O5HXqOzuZERgJyjFSYtZty7h6J3UErWsP0-DoQ1pFZtyjiw/s857/image1.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiChGqKLOWQAzrIzk294q6i6XuUoR1ul0qoTAR8RHQw-bZT-ulyruug-HNY8f2em7ZgzHE1UP6yQbe4plM0gkmXu6KwcTmsNogbr6FjTGzSDrBEDFhVLQ4TdbxVp_bbB21gA_jR84-1r9ly-O5HXqOzuZERgJyjFSYtZty7h6J3UErWsP0-DoQ1pFZtyjiw/s16000/image1.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Example of the assistive lung cancer screening system outputs. Results for the radiologist’s evaluation are visualized on the location of the CT volume where the suspicious lesion is found. The overall suspicion is displayed at the top of the CT images. Circles highlight the suspicious lesions while squares show a rendering of the same lesion from a different perspective, called a sagittal view.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+The assistive lung cancer screening system comprises 13 models and has a high-level architecture similar to the end-to-end system used in &lt;a href=&#34;https://blog.google/technology/health/lung-cancer-prediction/&#34;&gt;prior work&lt;/a&gt;. The models coordinate with each other to first segment the lungs, obtain an overall assessment, locate three suspicious regions, then use the information to assign a suspicion rating to each region. The system was deployed on Google Cloud using a &lt;a href=&#34;https://cloud.google.com/kubernetes-engine&#34;&gt;Google Kubernetes Engine&lt;/a&gt; (GKE) that pulled the images, ran the ML models, and provided results. This allows scalability and directly connects to servers where the images are stored in &lt;a href=&#34;https://cloud.google.com/healthcare-api/docs/concepts/dicom&#34;&gt;DICOM stores&lt;/a&gt;.
+&lt;/p&gt;
+
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlQLk7XcQtSX367ubw0D0TtTqZQg-H69p63qtVrGir3UfJcYUyys0n_Nks-YqURRklRWllhSKdH-FFjRvfkb9mGxEmL191sfpAclKD085x-u20FJS9BWJGULyLk0foVGKfq5T5F7_hx7Z4xHu1ZeHPLM63HUCaiCrkt8BThhiImts9epWqqCE2s0BLeoWU/s646/image4.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlQLk7XcQtSX367ubw0D0TtTqZQg-H69p63qtVrGir3UfJcYUyys0n_Nks-YqURRklRWllhSKdH-FFjRvfkb9mGxEmL191sfpAclKD085x-u20FJS9BWJGULyLk0foVGKfq5T5F7_hx7Z4xHu1ZeHPLM63HUCaiCrkt8BThhiImts9epWqqCE2s0BLeoWU/s16000/image4.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Outline of the Google Cloud deployment of the assistive lung cancer screening system and the directional calling flow for the individual components that serve the images and compute results. Images are served to the viewer and to the system using Google Cloud services. The system is run on a Google Kubernetes Engine that pulls the images, processes them, and writes them back into the DICOM store.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+  
+&lt;br /&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Reader studies &lt;/h2&gt;
+
+
+&lt;p&gt;
+To evaluate the system’s utility in improving clinical performance, we conducted two reader studies (i.e., experiments designed to assess clinical performance comparing expert performance with and without the aid of a technology) with 12 radiologists using pre-existing, de-identified CT scans. We presented 627 challenging cases to 6 US-based and 6 Japan-based radiologists. In the experimental setup, readers were divided into two groups that read each case twice, with and without assistance from the model. Readers were asked to apply scoring guidelines they typically use in their clinical practice and report their overall suspicion of cancer for each case. We then compared the results of the reader’s responses to measure the impact of the model on their workflow and decisions. The score and suspicion level were judged against the actual cancer outcomes of the individuals to measure sensitivity, specificity, and &lt;a href=&#34;https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc#:~:text=AUC%20stands%20for%20%22Area%20under,across%20all%20possible%20classification%20thresholds.&#34;&gt;area under the ROC curve&lt;/a&gt; (AUC) values. These were compared with and without assistance.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmiP7GWIMf_TKezxSK0sM8EOtfm2M3QoZtgvYfcjacMm2atdilirD93ftlu_QlyusIu_ocC6R0iHX1eXtHrU6g1yLUWnZ1Bq0FJ0nXEjTezptuSxGbpwDFIkQGeZrFPmwXV3IYvyzJYPCEhp4etRNzhGmHbbfQAwntOm4ZhQNpuXbei5sfN6MqsQXJctVH/s794/image3.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmiP7GWIMf_TKezxSK0sM8EOtfm2M3QoZtgvYfcjacMm2atdilirD93ftlu_QlyusIu_ocC6R0iHX1eXtHrU6g1yLUWnZ1Bq0FJ0nXEjTezptuSxGbpwDFIkQGeZrFPmwXV3IYvyzJYPCEhp4etRNzhGmHbbfQAwntOm4ZhQNpuXbei5sfN6MqsQXJctVH/s16000/image3.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;A multi-case multi-reader study involves each case being reviewed by each reader twice, once with ML system assistance and once without. In this visualization one reader first reviews Set A without assistance (&lt;strong&gt;blue&lt;/strong&gt;) and then with assistance (&lt;strong&gt;orange&lt;/strong&gt;) after a wash-out period. A second reader group follows the opposite path by reading the same set of cases Set A with assistance first. Readers are randomized to these groups to remove the effect of ordering.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+The ability to conduct these studies using the same interface highlights its generalizability to completely different cancer scoring systems, and the generalization of the model and assistive capability to different patient populations. Our study results demonstrated that when radiologists used the system in their clinical evaluation, they had an increased ability to correctly identify lung images without actionable lung cancer findings (i.e., &lt;em&gt;specificity&lt;/em&gt;) by an absolute 5–7% compared to when they didn’t use the assistive system. This potentially means that for every 15–20 patients screened, one may be able to avoid unnecessary follow-up procedures, thus reducing their anxiety and the burden on the health care system. This can, in turn, help improve the sustainability of lung cancer screening programs, particularly as &lt;a href=&#34;https://pubmed.ncbi.nlm.nih.gov/34636916/&#34;&gt;more people become eligible for screening&lt;/a&gt;. 
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDMKrqRR9njVuYSLV0Nzb7-MXdpyJTSofvvxFhyendGwnM9pddFyy48MVBWKsadYMUp1RGQBNL77vC0gCvjZ_fIsIQ8ZhGHZmy52srebu49xIL4wYkuvyftssXzvohoSoBKt9C2uwua6gz4ReO4LQvfMbhdrgtXvcYb3JruZAchta2n5MhU41pTpJLyMJI/s1999/image2.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDMKrqRR9njVuYSLV0Nzb7-MXdpyJTSofvvxFhyendGwnM9pddFyy48MVBWKsadYMUp1RGQBNL77vC0gCvjZ_fIsIQ8ZhGHZmy52srebu49xIL4wYkuvyftssXzvohoSoBKt9C2uwua6gz4ReO4LQvfMbhdrgtXvcYb3JruZAchta2n5MhU41pTpJLyMJI/s16000/image2.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Reader specificity increases with ML model assistance in both the US-based and Japan-based reader studies. Specificity values were derived from reader scores from actionable findings (something suspicious was found) versus no actionable findings, compared against the true cancer outcome of the individual.  Under model assistance, readers flagged fewer cancer-negative individuals for follow-up visits. Sensitivity for cancer positive individuals remained the same.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Translating this into real-world impact through partnership &lt;/h2&gt;
+
+
+&lt;p&gt;
+The system results demonstrate the potential for fewer follow-up visits, reduced anxiety, as well lower overall costs for lung cancer screening. In an effort to translate this research into real-world clinical impact, we are working with:  &lt;a href=&#34;https://deephealth.com/&#34;&gt;DeepHealth&lt;/a&gt;, a leading AI-powered health informatics provider; and &lt;a href=&#34;https://apolloradiologyintl.com/&#34;&gt;Apollo Radiology International&lt;/a&gt; a leading provider of Radiology services in India to explore paths for incorporating this system into future products. In addition, we are looking to help other researchers studying how best to integrate ML model results into clinical workflows by &lt;a href=&#34;https://github.com/Google-Health/google-health/tree/master/ct_dicom&#34;&gt;open sourcing code&lt;/a&gt; used for the reader study and incorporating the insights described in this blog. We hope that this will help accelerate medical imaging researchers looking to conduct reader studies for their AI models, and catalyze translational research in the field.  
+&lt;/p&gt;
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+
+
+&lt;p&gt;
+&lt;em&gt;Key contributors to this project include Corbin Cunningham, Zaid Nabulsi, Ryan Najafi, Jie Yang, Charles Lau, Joseph R. Ledsam, Wenxing Ye, Diego Ardila, Scott M. McKinney, Rory Pilgrim, Hiroaki Saito, Yasuteru Shimamura, Mozziyar Etemadi, Yun Liu, David Melnick, Sunny Jansen, Nadia Harhen, David P. Nadich, Mikhail Fomitchev, Ziyad Helali, Shabir Adeel, Greg S. Corrado, Lily Peng, Daniel Tse, Shravya Shetty, Shruthi Prabhakara, Neeral Beladia, and Krish Eswaran. Thanks to Arnav Agharwal and Andrew Sellergren for their open sourcing support and Vivek Natarajan and Michael D. Howell for their feedback. Sincere appreciation also goes to the radiologists who enabled this work with their image interpretation and annotation efforts throughout the study, and Jonny Wong and Carli Sampson for coordinating the reader studies.&lt;/em&gt;
+&lt;/p&gt;&lt;p&gt;&lt;/p&gt;</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> Google AI Blog</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2024-03-20 20:54:00</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 09:32:46.519769</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Google AI (noreply@blogger.com)&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of Computer-aided diagn...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

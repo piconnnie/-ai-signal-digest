@@ -1,7 +1,7 @@
 import time
 import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.triggers.interval import IntervalTrigger
+from apscheduler.triggers.cron import CronTrigger
 from src.core.config import Config
 from src.core.logger import setup_logger
 from src.core.database import init_db
@@ -71,10 +71,10 @@ def main():
     # Scheduler Setup
     scheduler = BlockingScheduler()
     
-    # Schedule: Run every 30 minutes
+    # Schedule: Run daily at 9:00 AM
     scheduler.add_job(
         run_pipeline,
-        trigger=IntervalTrigger(minutes=30),
+        trigger=CronTrigger(hour=9, minute=0),
         id='signal_digest_pipeline',
         name='Run Signal Digest Pipeline',
         replace_existing=True

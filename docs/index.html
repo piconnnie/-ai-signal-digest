@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-12">
+        
+        
+        
+    </div>
+</div>
+
+<div class="row">
+    <!-- Stats Cards -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Content</h5>
+                <h2 class="card-text">42</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Pending Relevance</h5>
+                <h2 class="card-text">1</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Relevant Items</h5>
+                <h2 class="card-text">0</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Synthesized</h5>
+                <h2 class="card-text">40</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Subscribe to Daily Digest 📱</h5>
+                <form action="/subscribe" method="POST" class="d-flex gap-2">
+                    <input type="text" name="phone" class="form-control"
+                        placeholder="Enter WhatsApp Number (e.g., +15551234567)" required>
+                    <button type="submit" class="btn btn-success">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                Recent Activity
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Source</th>
+                            <th>Published</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td>41</td>
+                            <td>Test Pending Item</td>
+                            <td><span class="badge bg-secondary">manual_test</span></td>
+                            <td>2026-02-14 10:02</td>
+                            <td>
+                                
+                                <span class="badge bg-warning">Pending</span>
+                            </td>
+                            <td><a href="item/41/index.html"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>42</td>
+                            <td>Test Irrelevant Item</td>
+                            <td><span class="badge bg-secondary">manual_test</span></td>
+                            <td>2026-02-14 10:02</td>
+                            <td>
+                                
+                                <span class="badge bg-secondary">Irrelevant</span>
+                            </td>
+                            <td><a href="item/42/index.html"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>40</td>
+                            <td>Nemotron ColEmbed V2: Raising the Bar for Multimodal Retrieval with ViDoRe V3’s Top Model</td>
+                            <td><span class="badge bg-secondary">Hugging Face Blog</span></td>
+                            <td>2026-02-04 15:00</td>
+                            <td>
+                                
+                                <span class="badge bg-success">Delivered</span>
+                            </td>
+                            <td><a href="item/40/index.html"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>39</td>
+                            <td>Introducing SyGra Studio</td>
+                            <td><span class="badge bg-secondary">Hugging Face Blog</span></td>
+                            <td>2026-02-05 16:52</td>
+                            <td>
+                                
+                                <span class="badge bg-success">Delivered</span>
+                            </td>
+                            <td><a href="item/39/index.html"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>38</td>
+                            <td>Transformers.js v4 Preview: Now Available on NPM!</td>
+                            <td><span class="badge bg-secondary">Hugging Face Blog</span></td>
+                            <td>2026-02-09 00:00</td>
+                            <td>
+                                
+                                <span class="badge bg-success">Delivered</span>
+                            </td>
+                            <td><a href="item/38/index.html"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

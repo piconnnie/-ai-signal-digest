@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>Function-Space Decoupled Diffusion for Forward and Inverse Modeling in Carbon Capture and Storage</h3>
+                <a href="https://arxiv.org/pdf/2602.12274v1" target="_blank" class="text-muted">https://arxiv.org/pdf/2602.12274v1</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">Accurate characterization of subsurface flow is critical for Carbon Capture and Storage (CCS) but remains challenged by the ill-posed nature of inverse problems with sparse observations. We present Fun-DDPS, a generative framework that combines function-space diffusion models with differentiable neural operator surrogates for both forward and inverse modeling. Our approach learns a prior distribution over geological parameters (geomodel) using a single-channel diffusion model, then leverages a Local Neural Operator (LNO) surrogate to provide physics-consistent guidance for cross-field conditioning on the dynamics field. This decoupling allows the diffusion prior to robustly recover missing information in parameter space, while the surrogate provides efficient gradient-based guidance for data assimilation. We demonstrate Fun-DDPS on synthetic CCS modeling datasets, achieving two key results: (1) For forward modeling with only 25% observations, Fun-DDPS achieves 7.7% relative error compared to 86.9% for standard surrogates (an 11x improvement), proving its capability to handle extreme data sparsity where deterministic methods fail. (2) We provide the first rigorous validation of diffusion-based inverse solvers against asymptotically exact Rejection Sampling (RS) posteriors. Both Fun-DDPS and the joint-state baseline (Fun-DPS) achieve Jensen-Shannon divergence less than 0.06 against the ground truth. Crucially, Fun-DDPS produces physically consistent realizations free from the high-frequency artifacts observed in joint-state baselines, achieving this with 4x improved sample efficiency compared to rejection sampling.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> arxiv</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2026-02-12 18:58:12</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 07:54:39.058915</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Xin Ju&#39;, &#39;Jiachen Yao&#39;, &#39;Anima Anandkumar&#39;, &#39;Sally M. Benson&#39;, &#39;Gege Wen&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of Function-Space Decou...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

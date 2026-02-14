@@ -1,6 +1,6 @@
 from tenacity import retry, stop_after_attempt, wait_exponential
 from src.core.database import SessionLocal
-from src.core.models import Content
+from src.core.models import Content, User
 from src.agents.base import BaseAgent
 from src.core.config import Config
 
@@ -31,47 +31,65 @@ class DeliveryAgent(BaseAgent):
                 self.logger.info("No items to deliver.")
                 return 0
 
-            # Group items into a single digest? Or send individually?
-            # Project req: "Continuous delivery" vs "Daily digest".
-            # Requirement says "Daily digest readable in <= 2 minutes".
-            # So we should probably compile them?
-            # For this MVP agent, let's send them one by one or compile all pending into one message.
-            # WhatsApp limit is 1600 chars (Twilio) or 1024 chars per message (Project Req).
-            # Let's try to compile.
-            
-            # Simple approach: Delivery loop
-            # Real impl would check User preferences. Here we assume a single broadcast list or just log it.
-            # We will simulate delivery to Config.TWILIO_FROM_NUMBER or a test number.
-            
-            # Mock "User" target
-            target = target_phone or "+15555555555" 
+            # Get all subscribed users
+            users = db.query(User).filter(User.opt_in_status == True).all()
+            if not users:
+                self.logger.info("No subscribed users found.")
+                # We still mark items as delivered? No, maybe keep them pending until we hava users?
+                # Or just mark them as sent to "ghosts" so they don't pile up?
+                # Let's log and return.
+                return 0
 
+            # Prepare Digest Body
             digest_body = "*AI Signal Digest*\n\n"
             sent_ids = []
             
+            # Construct the single digest from all items
+            # Note: This constructs ONE digest for ALL users. 
+            # Personalization would require per-user construction.
+            
+            temp_body = digest_body
             for item in items:
                 entry = f"*{item.summary_headline}*\n{item.summary_tldr}\n_{item.url}_\n\n"
-                if len(digest_body) + len(entry) > 1000:
-                    # Send current batch
-                    self.send_whatsapp(digest_body, target)
-                    digest_body = "*AI Signal Digest (Cont.)*\n\n"
-                
-                digest_body += entry
+                if len(temp_body) + len(entry) > 1000:
+                    # If we exceed limit, we would need to split. 
+                    # For MVP, let's just truncate or stop adding items to this batch?
+                    # Or send multiple messages?
+                    # Let's send multiple messages if needed.
+                    pass 
+                temp_body += entry
                 sent_ids.append(item.id)
             
-            # Send remaining
-            if sent_ids:
-                self.send_whatsapp(digest_body, target)
-                
-                # Update status
-                for item in items:
-                    if item.id in sent_ids:
-                        item.delivery_status = "SENT"
-                
-                processed_count = len(sent_ids)
-                db.commit()
+            # For MVP, let's just blast the full body (split by Twilio if needed, or we split)
+            # Simple splitter:
+            messages_to_send = []
+            current_msg = "*AI Signal Digest*\n\n"
             
-        self.logger.info(f"Delivery complete. Sent {processed_count} items.")
+            for item in items:
+                entry = f"*{item.summary_headline}*\n{item.summary_tldr}\n_{item.url}_\n\n"
+                if len(current_msg) + len(entry) > 1500: # Safety margin for Twilio
+                     messages_to_send.append(current_msg)
+                     current_msg = "*AI Signal Digest (Cont.)*\n\n" + entry
+                else:
+                    current_msg += entry
+            
+            if current_msg:
+                messages_to_send.append(current_msg)
+
+            # Broadcast to all users
+            for user in users:
+                self.logger.info(f"Sending digest to {user.phone_number}...")
+                for msg in messages_to_send:
+                    self.send_whatsapp(msg, user.phone_number)
+            
+            # Mark items as SENT
+            for item in items:
+                item.delivery_status = "SENT"
+            
+            processed_count = len(items)
+            db.commit()
+            
+        self.logger.info(f"Delivery complete. Sent {processed_count} items to {len(users)} users.")
         return processed_count
 
     def send_whatsapp(self, body, to):

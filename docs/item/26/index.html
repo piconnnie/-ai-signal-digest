@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>Generative AI to quantify uncertainty in weather forecasting</h3>
+                <a href="http://blog.research.google/2024/03/generative-ai-to-quantify-uncertainty.html" target="_blank" class="text-muted">http://blog.research.google/2024/03/generative-ai-to-quantify-uncertainty.html</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">&lt;span class=&#34;byline-author&#34;&gt;Posted by Lizao (Larry) Li, Software Engineer, and Rob Carver, Research Scientist, Google Research&lt;/span&gt;
+
+&lt;img src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglI5U51vvhkA4cAuVvMLn0TbbL5pdlFL-LO1sNnqLyUieA6A88I5HrhJlszxR1GKQqSK5wsdlATDKSy6EC1BsNF7tzS6oVlFLtau13mVFLk954nFu85HDMP3PrQboG4eXExEtUjEuDRFpcrMqE_F0ikSwXiWBECAfJiLbjr6h6523DROJkbC284xX35zC7/s1000/image3.gif&#34; style=&#34;display: none;&#34; /&gt;
+
+&lt;p&gt;
+Accurate weather forecasts can have a direct impact on people’s lives, from helping make routine decisions, like what to pack for a day’s activities, to informing urgent actions, for example, protecting people in the face of hazardous weather conditions. The importance of accurate and timely weather forecasts will only increase as the climate changes. Recognizing this, we at Google have been investing in weather and climate research to help ensure that the forecasting technology of tomorrow can meet the demand for reliable weather information. Some of our recent innovations include &lt;a href=&#34;https://blog.research.google/2023/11/metnet-3-state-of-art-neural-weather.html&#34;&gt;MetNet-3&lt;/a&gt;, Google&#39;s high-resolution forecasts up to 24-hours into the future, and &lt;a href=&#34;https://deepmind.google/discover/blog/graphcast-ai-model-for-faster-and-more-accurate-global-weather-forecasting/&#34;&gt;GraphCast&lt;/a&gt;, a weather model that can predict weather up to 10 days ahead.
+&lt;/p&gt;
+&lt;a name=&#34;more&#34;&gt;&lt;/a&gt; 
+
+&lt;p&gt;
+Weather is inherently stochastic. To quantify the uncertainty, traditional methods rely on physics-based simulation to generate an ensemble of forecasts. However, it is computationally costly to generate a large ensemble so that rare and extreme weather events can be discerned and characterized accurately.  
+&lt;/p&gt;
+&lt;p&gt;
+With that in mind, we are excited to announce our latest innovation designed to accelerate progress in weather forecasting, &lt;a href=&#34;https://www.science.org/doi/10.1126/sciadv.adk4489&#34;&gt;Scalable Ensemble Envelope Diffusion Sampler&lt;/a&gt; (SEEDS), recently published in &lt;em&gt;&lt;a href=&#34;https://www.science.org/journal/sciadv&#34;&gt;Science Advances&lt;/a&gt;&lt;/em&gt;. SEEDS is a generative AI model that can efficiently generate ensembles of weather forecasts &lt;em&gt;at scale &lt;/em&gt;at a small fraction of the cost of traditional physics-based forecasting models. This technology opens up novel opportunities for weather and climate science, and it represents one of the first applications to weather and climate forecasting of probabilistic diffusion models, a generative AI technology behind recent advances in media generation.
+&lt;/p&gt;
+&lt;br /&gt; 
+
+&lt;h2&gt;The need for probabilistic forecasts: the butterfly effect&lt;/h2&gt;
+
+&lt;p&gt;
+In December 1972, at the &lt;a href=&#34;https://www.aaas.org/&#34;&gt;American Association for the Advancement of Science&lt;/a&gt; meeting in Washington, D.C., MIT meteorology professor &lt;a href=&#34;https://en.wikipedia.org/wiki/Edward_Norton_Lorenz&#34;&gt;Ed Lorenz&lt;/a&gt; gave a talk entitled, “Does the Flap of a Butterfly&#39;s Wings in Brazil Set Off a Tornado in Texas?” which contributed to the term “&lt;a href=&#34;https://en.wikipedia.org/wiki/Butterfly_effect&#34;&gt;butterfly effect&lt;/a&gt;”. He was building on his earlier, landmark 1963 paper where he examined the feasibility of “very-long-range weather prediction” and described how errors in initial conditions grow exponentially when integrated in time with numerical weather prediction models. This exponential error growth, known as chaos, results in a deterministic predictability limit that restricts the use of individual forecasts in decision making, because they do not quantify the inherent uncertainty of weather conditions. This is particularly problematic when forecasting extreme weather events, such as hurricanes, heatwaves, or floods.
+&lt;/p&gt;
+&lt;p&gt;
+Recognizing the limitations of deterministic forecasts, weather agencies around the world issue &lt;em&gt;probabilistic forecasts&lt;/em&gt;. Such forecasts are based on ensembles of deterministic forecasts, each of which is generated by including synthetic noise in the initial conditions and stochasticity in the physical processes. Leveraging the fast error growth rate in weather models, the forecasts in an ensemble are purposefully different: the initial uncertainties are tuned to generate runs that are as different as possible and the stochastic processes in the weather model introduce additional differences during the model run. The error growth is mitigated by averaging all the forecasts in the ensemble and the variability in the ensemble of forecasts quantifies the uncertainty of the weather conditions.
+&lt;/p&gt;
+&lt;p&gt;
+While effective, generating these probabilistic forecasts is computationally costly. They require running highly complex numerical weather models on massive supercomputers multiple times. Consequently, many operational weather forecasts can only afford to generate ~10–50 ensemble members for each forecast cycle. This is a problem for users concerned with the likelihood of rare but high-impact weather events, which typically require much larger ensembles to assess beyond a few days. For instance, one would need a 10,000-member ensemble to forecast the likelihood of events with 1% probability of occurrence with a relative error less than 10%. Quantifying the probability of such extreme events could be useful, for example, for emergency management preparation or for energy traders.
+&lt;/p&gt;
+&lt;br /&gt; 
+
+&lt;h2&gt;SEEDS: AI-enabled advances&lt;/h2&gt;
+
+&lt;p&gt;
+In the aforementioned &lt;a href=&#34;https://www.science.org/doi/10.1126/sciadv.adk4489&#34;&gt;paper&lt;/a&gt;, we present the Scalable Ensemble Envelope Diffusion Sampler (SEEDS), a generative AI technology for weather forecast ensemble generation. SEEDS is based on &lt;a href=&#34;https://blog.research.google/2021/07/high-fidelity-image-generation-using.html&#34;&gt;denoising diffusion probabilistic&lt;/a&gt; models, a state-of-the-art generative AI method pioneered in part by Google Research.
+&lt;/p&gt;
+&lt;p&gt;
+SEEDS can generate a large ensemble conditioned on as few as one or two forecasts from an operational numerical weather prediction system. The generated ensembles not only yield plausible real-weather–like forecasts but also match or exceed physics-based ensembles in skill metrics such as the &lt;a href=&#34;https://www.jstor.org/stable/26201352&#34;&gt;rank histogram&lt;/a&gt;, the &lt;a href=&#34;https://en.wikipedia.org/wiki/Root-mean-square_deviation&#34;&gt;root-mean-squared error&lt;/a&gt; (RMSE), and the &lt;a href=&#34;https://www.tandfonline.com/doi/abs/10.1198/016214506000001437&#34;&gt;continuous ranked probability score&lt;/a&gt; (CRPS). In particular, the generated ensembles assign more accurate likelihoods to the tail of the forecast distribution, such as ±2σ and ±3σ weather events. Most importantly, the computational cost of the model is negligible when compared to the hours of computational time needed by supercomputers to make a forecast. It has a throughput of 256 ensemble members (at 2° resolution) per 3 minutes on Google Cloud TPUv3-32 instances and can easily scale to higher throughput by deploying more accelerators. 
+&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglI5U51vvhkA4cAuVvMLn0TbbL5pdlFL-LO1sNnqLyUieA6A88I5HrhJlszxR1GKQqSK5wsdlATDKSy6EC1BsNF7tzS6oVlFLtau13mVFLk954nFu85HDMP3PrQboG4eXExEtUjEuDRFpcrMqE_F0ikSwXiWBECAfJiLbjr6h6523DROJkbC284xX35zC7/s1000/image3.gif&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglI5U51vvhkA4cAuVvMLn0TbbL5pdlFL-LO1sNnqLyUieA6A88I5HrhJlszxR1GKQqSK5wsdlATDKSy6EC1BsNF7tzS6oVlFLtau13mVFLk954nFu85HDMP3PrQboG4eXExEtUjEuDRFpcrMqE_F0ikSwXiWBECAfJiLbjr6h6523DROJkbC284xX35zC7/s16000/image3.gif&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;SEEDS generates an order-of-magnitude more samples to in-fill distributions of weather patterns.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Generating plausible weather forecasts&lt;/h2&gt;
+
+
+&lt;p&gt;
+Generative AI is known to generate very detailed images and videos. This property is especially useful for generating ensemble forecasts that are consistent with plausible weather patterns, which ultimately result in the most added value for downstream applications.  As Lorenz points out, “The [weather forecast] maps which they produce should look like real weather maps.&#34; The figure below contrasts the forecasts from SEEDS to those from the operational U.S. weather prediction system (&lt;a href=&#34;https://www.emc.ncep.noaa.gov/emc/pages/numerical_forecast_systems/gefs.php&#34;&gt;Global Ensemble Forecast System&lt;/a&gt;, GEFS) for a particular date during the &lt;a href=&#34;https://en.wikipedia.org/wiki/2022_European_heatwaves&#34;&gt;2022 European heat waves&lt;/a&gt;. We also compare the results to the forecasts from a Gaussian model that predicts the univariate mean and standard deviation of each atmospheric field at each location, a common and computationally efficient but less sophisticated data-driven approach. This Gaussian model is meant to characterize the output of pointwise post-processing, which ignores correlations and treats each grid point as an independent random variable. In contrast, a real weather map would have detailed &lt;em&gt;correlational&lt;/em&gt; structures. 
+&lt;/p&gt;
+&lt;p&gt;
+Because SEEDS directly models the joint distribution of the atmospheric state, it realistically captures both the spatial covariance and the correlation between mid-tropospheric geopotential and mean sea level pressure, both of which are closely related and are commonly used by weather forecasters for evaluation and verification of forecasts. Gradients in the mean sea level pressure are what drive winds at the surface, while gradients in mid-tropospheric geopotential create upper-level winds that move large-scale weather patterns. 
+&lt;/p&gt;
+&lt;p&gt;
+The generated samples from SEEDS shown in the figure below (frames Ca–Ch) display a geopotential trough west of Portugal with spatial structure similar to that found in the operational U.S. forecasts or the reanalysis based on observations. Although the Gaussian model predicts the marginal univariate distributions adequately, it fails to capture cross-field or spatial correlations. This hinders the assessment of the effects that these anomalies may have on hot air intrusions from North Africa, which can exacerbate heat waves over Europe.
+&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQE94TGK404COMAKKxaPwUO9bD8gIzQfu6A0u5c-5xbGKhlUtBW_0KAj-Ur8kpgt5_f-IjAuFzeecpRbbWVujZNQVExTsl0UuDRtOb84Y8uFWc4G1UYYZos6gLVtIHQ3AZ7ojRqoMSmt8IHdTOSx365AaoNyUfNMi1ksC0Wh_axeD_THB6sOmnZZHhrvHQ/s1999/image2.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQE94TGK404COMAKKxaPwUO9bD8gIzQfu6A0u5c-5xbGKhlUtBW_0KAj-Ur8kpgt5_f-IjAuFzeecpRbbWVujZNQVExTsl0UuDRtOb84Y8uFWc4G1UYYZos6gLVtIHQ3AZ7ojRqoMSmt8IHdTOSx365AaoNyUfNMi1ksC0Wh_axeD_THB6sOmnZZHhrvHQ/s16000/image2.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Stamp maps over Europe on 2022/07/14 at 0:00 UTC. The contours are for the mean sea level pressure (dashed lines mark isobars below 1010 hPa) while the heatmap depicts the geopotential height at the 500 hPa pressure level. (A) The&amp;nbsp;&lt;a href=&#34;https://www.ecmwf.int/en/forecasts/dataset/ecmwf-reanalysis-v5&#34;&gt;ERA5&lt;/a&gt;&amp;nbsp;reanalysis, a proxy for real observations. (Ba-Bb) 2 members from the 7-day U.S. operational forecasts used as seeds to our model. (Ca-Ch) 8 samples drawn from SEEDS. (Da-Dh) 8 non-seeding members from the 7-day U.S. operational ensemble forecast. (Ea-Ed) 4 samples from a pointwise Gaussian model parameterized by the mean and variance of the entire U.S. operational ensemble.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Covering extreme events more accurately  &lt;/h2&gt;
+
+&lt;p&gt;
+Below we show the joint distributions of temperature at 2 meters and total column water vapor near Lisbon during the extreme heat event on 2022/07/14, at 1:00 local time. We used the 7-day forecasts issued on 2022/07/07. For each plot, we generate 16,384-member ensembles with SEEDS. The observed weather event from ERA5 is denoted by the star. The operational ensemble is also shown, with squares denoting the forecasts used to seed the generated ensembles, and triangles denoting the rest of ensemble members.
+&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVbbmrrrJ5L1NVb_O7WPUD-d6ULlTJTSns6ZaqjxOqZ4YAi4zOiT72rfMBf8EGTe0kdofIrWAMESq1m2v9IBjnd_k6UAIDM7LvhbxdVr41FOQ0fqkKeERF_QqXbxs94qKLdMxR-A7Hbxkjd4zZn07AlldAsuvn7jsYCu-V3UVAatovY1ELbrcLQz5I1ppX/s1999/image1.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVbbmrrrJ5L1NVb_O7WPUD-d6ULlTJTSns6ZaqjxOqZ4YAi4zOiT72rfMBf8EGTe0kdofIrWAMESq1m2v9IBjnd_k6UAIDM7LvhbxdVr41FOQ0fqkKeERF_QqXbxs94qKLdMxR-A7Hbxkjd4zZn07AlldAsuvn7jsYCu-V3UVAatovY1ELbrcLQz5I1ppX/s16000/image1.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;SEEDS provides better statistical coverage of the 2022/07/14 European extreme heat event, denoted by the brown star . Each plot shows the values of the total column-integrated water vapor (TCVW) vs. temperature over a grid point near Lisbon, Portugal from 16,384 samples generated by our models, shown as green dots, conditioned on 2 seeds (blue squares) taken from the 7-day U.S. operational ensemble forecasts (denoted by the sparser brown triangles). The valid forecast time is 1:00 local time. The solid contour levels correspond to iso-proportions of the kernel density of SEEDS, with the outermost one encircling 95% of the mass and 11.875% between each level.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+&lt;br /&gt;
+
+&lt;p&gt;
+According to the U.S. operational ensemble, the observed event was so unlikely seven days prior that none of its 31 members predicted near-surface temperatures as warm as those observed. Indeed, the event probability computed from a Gaussian kernel density estimate is lower than 1%, which means that ensembles with less than 100 members are unlikely to contain forecasts as extreme as this event. In contrast, the SEEDS ensembles are able to extrapolate from the two seeding forecasts, providing an envelope of possible weather states with much better statistical coverage of the event. This allows both quantifying the probability of the event taking place and sampling weather regimes under which it would occur. Specifically, our highly scalable generative approach enables the creation of very large ensembles that can characterize very rare events by providing samples of weather states exceeding a given threshold for any user-defined diagnostic.
+&lt;/p&gt;
+&lt;br /&gt; 
+
+&lt;h2&gt;Conclusion and future outlook&lt;/h2&gt;
+
+&lt;p&gt;
+SEEDS leverages the power of generative AI to produce ensemble forecasts comparable to those from the operational U.S. forecast system, but at an accelerated pace. The results reported in this paper need only 2 seeding forecasts from the operational system, which generates 31 forecasts in its current version. This leads to a hybrid forecasting system where a few weather trajectories computed with a physics-based model are used to seed a diffusion model that can generate additional forecasts much more efficiently. This methodology provides an alternative to the current operational weather forecasting paradigm, where the computational resources saved by the statistical emulator could be allocated to increasing the resolution of the physics-based model or issuing forecasts more frequently.
+&lt;/p&gt;
+&lt;p&gt;
+We believe that SEEDS represents just one of the many ways that AI will accelerate progress in operational numerical weather prediction in coming years. We hope this demonstration of the  utility of generative AI for weather forecast emulation and post-processing will spur its application in research areas such as climate risk assessment, where generating a large number of ensembles of climate projections is crucial to accurately quantifying the uncertainty about future climate.
+&lt;/p&gt;
+&lt;br /&gt; 
+
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+
+&lt;p&gt;
+&lt;em&gt;All SEEDS authors, Lizao Li, Rob Carver, Ignacio Lopez-Gomez, Fei Sha and John Anderson, co-authored this blog post, with Carla Bromberg as Program Lead. We also thank Tom Small who designed the animation. Our colleagues at Google Research have provided invaluable advice to the SEEDS work. Among them, we thank Leonardo Zepeda-Núñez, Zhong Yi Wan, Stephan Rasp, Stephan Hoyer, and Tapio Schneider for their inputs and useful discussion. We thank Tyler Russell for additional technical program management, as well as Alex Merose for data coordination and support. We also thank Cenk Gazen, Shreya Agrawal, and Jason Hickey for discussions in the early stage of the SEEDS work. &lt;/em&gt;
+&lt;/p&gt;</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> Google AI Blog</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2024-03-29 18:03:00</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 09:32:46.518679</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Google AI (noreply@blogger.com)&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of Generative AI to qua...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,22 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
+<div class="row">
+    <div class="col-12">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
 <div class="row">
     <!-- Stats Cards -->
     <div class="col-md-3">
@@ -38,6 +54,21 @@
 </div>
 
 <div class="row mt-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Subscribe to Daily Digest 📱</h5>
+                <form action="/subscribe" method="POST" class="d-flex gap-2">
+                    <input type="text" name="phone" class="form-control"
+                        placeholder="Enter WhatsApp Number (e.g., +15551234567)" required>
+                    <button type="submit" class="btn btn-success">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -63,15 +94,11 @@
                             <td><span class="badge bg-secondary">{{ item.source }}</span></td>
                             <td>{{ item.published_at.strftime('%Y-%m-%d %H:%M') }}</td>
                             <td>
-                                {% if item.relevance_label == 'IRRELEVANT' %}
-                                <span class="badge bg-danger">Irrelevant</span>
-                                {% elif item.relevance_label %}
-                                <span class="badge bg-success">{{ item.relevance_label }}</span>
-                                {% else %}
-                                <span class="badge bg-warning text-dark">Pending</span>
-                                {% endif %}
+                                {% set status_label, status_color = get_lifecycle_status(item) %}
+                                <span class="badge bg-{{ status_color }}">{{ status_label }}</span>
                             </td>
-                            <td><a href="/item/{{ item.id }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                            <td><a href="{{ url_for('content_detail', item_id=item.id) }}"
+                                    class="btn btn-sm btn-outline-primary">View</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>Using AI to expand global access to reliable flood forecasts</h3>
+                <a href="http://blog.research.google/2024/03/using-ai-to-expand-global-access-to.html" target="_blank" class="text-muted">http://blog.research.google/2024/03/using-ai-to-expand-global-access-to.html</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">&lt;span class=&#34;byline-author&#34;&gt;Posted by Yossi Matias, VP Engineering &amp;amp; Research, and Grey Nearing, Research Scientist, Google Research&lt;/span&gt;
+
+&lt;img src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgABDUlqCHMxNY-QfEftM_9yPy1z4jr1odB-_kSP79yjk6igtpPJNFIocQOKDRnZ3VLmqrI9tqX-dCHpcYtnSx96y9X9V9knp1CiAREvfgZX71D0XpWZNgPdZOI7aMW3POigHJ2rLeA1G1asaAPO3KIB3j0WzUr5C707I7p0L_itspYYEhYDhDTzd39tNUD/s320/Flood%20forecasting%20hero%20image.jpg&#34; style=&#34;display: none;&#34; /&gt;
+
+&lt;p&gt;
+Floods are the &lt;a href=&#34;https://openknowledge.worldbank.org/server/api/core/bitstreams/e218989e-8b3b-5f8c-944c-06e9812215aa/content&#34;&gt;most common natural disaster&lt;/a&gt;, and are responsible for roughly &lt;a href=&#34;https://www.swissre.com/risk-knowledge/mitigating-climate-risk/floods.html&#34;&gt;$50 billion&lt;/a&gt; in annual financial damages worldwide. The &lt;a href=&#34;https://library.wmo.int/records/item/57630-2021-state-of-climate-services-water?offset=1#:~:text=WMO%2DNo.,1278&amp;amp;text=More%20than%202%20billion%20people,for%20the%20past%2020%20years.&#34;&gt;rate of flood-related disasters has more than doubled&lt;/a&gt; since the year 2000 partly &lt;a href=&#34;https://www.nature.com/articles/s41598-020-70816-2&#34;&gt;due to climate change&lt;/a&gt;. Nearly &lt;a href=&#34;https://openknowledge.worldbank.org/server/api/core/bitstreams/e218989e-8b3b-5f8c-944c-06e9812215aa/content&#34;&gt;1.5 billion people&lt;/a&gt;, making up 19% of the world’s population, are exposed to substantial risks from severe flood events. Upgrading early warning systems to make accurate and timely information accessible to these populations &lt;a href=&#34;https://elibrary.worldbank.org/doi/abs/10.1596/1813-9450-6058&#34;&gt;can save thousands of lives per year&lt;/a&gt;. 
+&lt;/p&gt;
+&lt;a name=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;p&gt;
+Driven by the potential impact of reliable flood forecasting on people’s lives globally, we started our flood forecasting effort in 2017. Through this &lt;a href=&#34;https://blog.google/technology/ai/google-ai-global-flood-forecasting/&#34;&gt;multi-year journey&lt;/a&gt;, we advanced research over the years hand-in-hand with building a real-time operational flood forecasting system that &lt;a href=&#34;https://blog.google/technology/ai/expanding-our-ml-based-flood-forecasting/&#34;&gt;provides alerts&lt;/a&gt; on Google Search, Maps, Android notifications and through the &lt;a href=&#34;http://g.co/floodhub&#34;&gt;Flood Hub&lt;/a&gt;. However, in order to &lt;a href=&#34;https://blog.google/outreach-initiatives/sustainability/flood-hub-ai-flood-forecasting-more-countries/&#34;&gt;scale globally&lt;/a&gt;, especially in places where accurate local data is not available, more research advances were required.
+&lt;/p&gt;
+
+&lt;p&gt;
+In “&lt;a href=&#34;https://www.nature.com/articles/s41586-024-07145-1&#34;&gt;Global prediction of extreme floods in ungauged watersheds&lt;/a&gt;”, published in &lt;em&gt;&lt;a href=&#34;https://www.nature.com/&#34;&gt;Nature&lt;/a&gt;&lt;/em&gt;, we demonstrate how machine learning (ML) technologies can significantly improve global-scale &lt;a href=&#34;https://sites.research.google/floodforecasting/&#34;&gt;flood forecasting&lt;/a&gt; relative to the current state-of-the-art for countries where flood-related data is scarce. With these AI-based technologies we extended the reliability of currently-available global nowcasts, on average, from zero to five days, and improved forecasts across regions in Africa and Asia to be similar to what are currently available in Europe. The evaluation of the models was conducted in collaboration with the European Center for Medium Range Weather Forecasting (&lt;a href=&#34;https://www.ecmwf.int/&#34;&gt;ECMWF&lt;/a&gt;).
+&lt;/p&gt;
+
+&lt;p&gt;
+These technologies also enable &lt;a href=&#34;http://g.co/floodhub&#34;&gt;Flood Hub&lt;/a&gt; to provide real-time river forecasts up to seven days in advance, &lt;a href=&#34;https://blog.google/outreach-initiatives/sustainability/flood-hub-ai-flood-forecasting-more-countries/&#34;&gt;covering&lt;/a&gt; river reaches across over 80 countries. This information can be used by people, communities, governments and international organizations to take anticipatory action to help protect vulnerable populations.
+&lt;/p&gt;
+
+&lt;br /&gt;
+&lt;div class=&#34;separator&#34; style=&#34;clear: both; text-align: center;&#34;&gt;&lt;/div&gt;
+&lt;br /&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Flood forecasting at Google &lt;/h2&gt;
+
+
+&lt;p&gt;
+The ML models that power the FloodHub tool are the product of many years of research, conducted in collaboration with several partners, including academics, governments, international organizations, and NGOs. 
+&lt;/p&gt;
+
+&lt;p&gt;
+In 2018, we &lt;a href=&#34;https://blog.google/products/search/helping-keep-people-safe-ai-enabled-flood-forecasting/&#34;&gt;launched a pilot&lt;/a&gt; early warning system in the Ganges-Brahmaputra river basin in India, with the &lt;a href=&#34;https://arxiv.org/abs/1901.09583&#34;&gt;hypothesis&lt;/a&gt; that ML could help address the challenging problem of reliable flood forecasting at scale. The pilot was further &lt;a href=&#34;https://blog.google/technology/ai/tracking-our-progress-on-flood-forecasting/&#34;&gt;expanded&lt;/a&gt; the following year &lt;a href=&#34;https://ai.googleblog.com/2019/09/an-inside-look-at-flood-forecasting.html&#34;&gt;via the combination&lt;/a&gt; of an inundation model, real-time water level measurements, the creation of an elevation map and hydrologic modeling.
+&lt;/p&gt;
+
+&lt;p&gt;
+In &lt;a href=&#34;https://ai.googleblog.com/2019/03/a-summary-of-google-flood-forecasting.html&#34;&gt;collaboration&lt;/a&gt; with academics, and, in particular, with the &lt;a href=&#34;https://www.jku.at/en/institute-for-machine-learning/&#34;&gt;JKU Institute for Machine Learning&lt;/a&gt; we explored ML-based hydrologic models, showing that &lt;a href=&#34;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&#34;&gt;LSTM&lt;/a&gt;-based models could &lt;a href=&#34;https://hess.copernicus.org/articles/23/5089/2019/&#34;&gt;produce more accurate simulations&lt;/a&gt; than traditional conceptual and physics-based &lt;a href=&#34;https://en.wikipedia.org/wiki/Hydrological_model&#34;&gt;hydrology models&lt;/a&gt;. This research led to &lt;a href=&#34;https://blog.research.google/2020/09/the-technology-behind-our-recent.html&#34;&gt;flood forecasting improvements&lt;/a&gt; that enabled the &lt;a href=&#34;https://blog.google/technology/ai/flood-forecasts-india-bangladesh/&#34;&gt;expansion&lt;/a&gt; of our forecasting coverage to include all of India and Bangladesh. We also worked with researchers at Yale University to test technological interventions that increase the &lt;a href=&#34;https://egc.yale.edu/about/perspectives/pande-and-coauthors-using-technology-save-lives-during-indias-monsoon-season&#34;&gt;reach and impact&lt;/a&gt; of flood warnings.
+&lt;/p&gt;
+
+&lt;p&gt;
+Our hydrological models predict river floods by processing publicly available weather data like precipitation and physical watershed information. Such models must be calibrated to long data records from &lt;a href=&#34;https://en.wikipedia.org/wiki/Stream_gauge&#34;&gt;streamflow gauging stations&lt;/a&gt; in individual rivers. A low percentage of global river watersheds (basins) have streamflow gauges, which are expensive but necessary to supply relevant data, and it’s challenging for hydrological simulation and forecasting to provide &lt;a href=&#34;https://www.tandfonline.com/doi/full/10.1080/02626667.2013.803183&#34;&gt;predictions in basins&lt;/a&gt; that lack this infrastructure. Lower &lt;a href=&#34;https://www.pnas.org/doi/full/10.1073/pnas.1414439112&#34;&gt;gross domestic product&lt;/a&gt; (GDP) is correlated with increased &lt;a href=&#34;https://www.pnas.org/doi/full/10.1073/pnas.1414439112&#34;&gt;vulnerability to flood risks&lt;/a&gt;, and there is an inverse correlation between national GDP and the amount of publicly available data in a country. ML helps to address this problem by allowing a &lt;a href=&#34;https://www.pnas.org/doi/full/10.1073/pnas.1414439112&#34;&gt;single model to be trained on all available river data&lt;/a&gt; and to be applied to ungauged basins where &lt;a href=&#34;https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2020wr028091&#34;&gt;no data are available&lt;/a&gt;. In this way, models can be trained globally, and can make predictions for any river location.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjxQUgMZAg0tVPN5LrxYbhpn3dukUCVogsWPgynrYNjFfbXpwK0RF79rYvK9kyehrha0F-vMLZR2eqBWdKCuGter6VoZrbCKnROTNn_hmOXBDxWmOFhFRvyg36ghO0B08fsQv7cqXdyngtfgCAgF5LhONs5VDzyvYjxzEYejVN3FxvzRs8w9Q5EeGJJTr3O/s1051/Streamflow%20data%20from%20the%20Global%20Runoff%20Data%20Center.jpg&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjxQUgMZAg0tVPN5LrxYbhpn3dukUCVogsWPgynrYNjFfbXpwK0RF79rYvK9kyehrha0F-vMLZR2eqBWdKCuGter6VoZrbCKnROTNn_hmOXBDxWmOFhFRvyg36ghO0B08fsQv7cqXdyngtfgCAgF5LhONs5VDzyvYjxzEYejVN3FxvzRs8w9Q5EeGJJTr3O/s16000/Streamflow%20data%20from%20the%20Global%20Runoff%20Data%20Center.jpg&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;There is an inverse (log-log) correlation between the amount of publicly available streamflow data in a country and national GDP. Streamflow data from the &lt;a href=&#34;https://www.bafg.de/GRDC/EN/Home/homepage_node.html&#34;&gt;Global Runoff Data Center&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+&lt;p&gt;
+Our academic collaborations led to ML research that developed methods to &lt;a href=&#34;https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2020wr028091&#34;&gt;estimate uncertainty in river forecasts&lt;/a&gt; and showed how ML river forecast models &lt;a href=&#34;https://hess.copernicus.org/articles/25/2685/2021/hess-25-2685-2021-relations.html&#34;&gt;synthesize information from multiple data sources&lt;/a&gt;. They demonstrated that these models can &lt;a href=&#34;https://hess.copernicus.org/articles/26/3377/2022/hess-26-3377-2022.html&#34;&gt;simulate extreme events reliably&lt;/a&gt;, even when those events are not part of the training data. In an effort to &lt;a href=&#34;https://blog.research.google/2023/04/directing-ml-toward-natural-hazard.html&#34;&gt;contribute&lt;/a&gt; to open science, in 2023 we open-sourced a community-driven dataset for large-sample hydrology in &lt;em&gt;&lt;a href=&#34;https://www.nature.com/articles/s41597-023-01975-w&#34;&gt;Nature Scientific Data&lt;/a&gt;&lt;/em&gt;. 
+&lt;/p&gt;
+
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;The river forecast model&lt;/h2&gt;
+
+
+&lt;p&gt;
+Most hydrology models used by national and international agencies for flood forecasting and river modeling are state-space models, which depend only on daily inputs (e.g., precipitation, temperature, etc.) and the current state of the system (e.g., soil moisture, snowpack, etc.). LSTMs are a variant of state-space models and work by defining a neural network that represents a single time step, where input data (such as current weather conditions) are processed to produce updated state information and output values (streamflow) for that time step. LSTMs are applied sequentially to make time-series predictions, and in this sense, behave similarly to how scientists typically conceptualize hydrologic systems. Empirically, we have found that &lt;a href=&#34;https://hess.copernicus.org/articles/23/5089/2019/&#34;&gt;LSTMs perform well&lt;/a&gt; on the task of river forecasting.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMfiw33NkHO8CQsYGWSZ91xhPx0iDONFLe8WZuRWDsoi8RRv7pHlF6M8eDLEWpO8lZECUfGi59_NsMXO8ASDZQ9xxrB87mupNTPpioKT0wRgSSc1FwYDmfCUWyooGGZmvMhZv0RDcWJVslQOPvRNOK_B6dXUGsnijSl-W-lICOIbALAwNC2PNEmqqXhv6g/s960/image1.gif&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMfiw33NkHO8CQsYGWSZ91xhPx0iDONFLe8WZuRWDsoi8RRv7pHlF6M8eDLEWpO8lZECUfGi59_NsMXO8ASDZQ9xxrB87mupNTPpioKT0wRgSSc1FwYDmfCUWyooGGZmvMhZv0RDcWJVslQOPvRNOK_B6dXUGsnijSl-W-lICOIbALAwNC2PNEmqqXhv6g/s16000/image1.gif&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;A diagram of the LSTM, which is a neural network that operates sequentially in time. An accessible primer can be found &lt;a href=&#34;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&#34;&gt;here&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+&lt;p&gt;
+Our river forecast model uses two LSTMs applied sequentially: (1) a “hindcast” LSTM ingests historical weather data (dynamic hindcast features) up to the present time (or rather, the issue time of a forecast), and (2) a “forecast” LSTM ingests states from the hindcast LSTM along with forecasted weather data (dynamic forecast features) to make future predictions. One year of historical weather data are input into the hindcast LSTM, and seven days of forecasted weather data are input into the forecast LSTM. Static features include geographical and geophysical characteristics of watersheds that are input into both the hindcast and forecast LSTMs and allow the model to learn different hydrological behaviors and responses in various types of watersheds. 
+&lt;/p&gt;
+
+&lt;p&gt;
+Output from the forecast LSTM is fed into a “head” layer that uses &lt;a href=&#34;https://publications.aston.ac.uk/id/eprint/373/1/NCRG_94_004.pdf&#34;&gt;mixture density networks&lt;/a&gt; to produce a probabilistic forecast (i.e., predicted parameters of a probability distribution over streamflow). Specifically, the model predicts the parameters of a mixture of heavy-tailed probability density functions, called &lt;a href=&#34;https://en.wikipedia.org/wiki/Asymmetric_Laplace_distribution&#34;&gt;asymmetric Laplacian distributions&lt;/a&gt;, at each forecast time step. The result is a mixture density function, called a &lt;a href=&#34;https://proceedings.neurips.cc/paper_files/paper/2019/file/d80126524c1e9641333502c664fc6ca1-Paper.pdf&#34;&gt;Countable Mixture of Asymmetric Laplacians&lt;/a&gt; (CMAL) distribution, which represents a probabilistic prediction of the volumetric flow rate in a particular river at a particular time. 
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjVPR4LA0EbJyAesDg4HvrMdxgG_0wiyLqJveir2Ryy06qDNVshkM2-zHvMj_y1LEBXOSm7ajMx2qzYCLNQrQ3dm8TRicy_wkTVtM4Xio_mhQPsgaSiN3sm3J8BBNYNpxWQbSm_aTSMyRW9UyIEWAAT9secPekdYNzyKRrXwgm10-ksyeUzTFRydXnt_Wai/s960/LSTM-based%20river%20forecast%20model.jpeg&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjVPR4LA0EbJyAesDg4HvrMdxgG_0wiyLqJveir2Ryy06qDNVshkM2-zHvMj_y1LEBXOSm7ajMx2qzYCLNQrQ3dm8TRicy_wkTVtM4Xio_mhQPsgaSiN3sm3J8BBNYNpxWQbSm_aTSMyRW9UyIEWAAT9secPekdYNzyKRrXwgm10-ksyeUzTFRydXnt_Wai/s16000/LSTM-based%20river%20forecast%20model.jpeg&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;LSTM-based river forecast model architecture. Two LSTMs are applied in sequence, one ingesting historical weather data and one ingesting forecasted weather data. The model outputs are the parameters of a probability distribution over streamflow at each forecasted timestep.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br /&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Input and training data&lt;/h2&gt;
+
+
+&lt;p&gt;
+The model uses three types of publicly available data inputs, mostly from governmental sources:
+&lt;/p&gt;
+&lt;ol&gt;
+
+&lt;li&gt;&lt;em&gt;Static watershed attributes representing geographical and geophysical variables:&lt;/em&gt; From the &lt;a href=&#34;https://www.hydrosheds.org/hydroatlas&#34;&gt;HydroATLAS project&lt;/a&gt;, including data like long-term climate indexes (precipitation, temperature, snow fractions), land cover, and anthropogenic attributes (e.g., a nighttime lights index as a proxy for human development). 
+
+&lt;/li&gt;&lt;li&gt;&lt;em&gt;Historical meteorological time-series data&lt;/em&gt;: Used to spin up the model for one year prior to the issue time of a forecast. The data comes from &lt;a href=&#34;https://gpm.nasa.gov/data/imerg&#34;&gt;NASA IMERG&lt;/a&gt;, &lt;a href=&#34;https://psl.noaa.gov/data/gridded/data.cpc.globalprecip.html&#34;&gt;NOAA  CPC  Global Unified Gauge-Based Analysis of Daily Precipitation&lt;/a&gt;, and the &lt;a href=&#34;https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=overview&#34;&gt;ECMWF ERA5-land reanalysis&lt;/a&gt;. Variables include daily total precipitation, air temperature, solar and thermal radiation, snowfall, and surface pressure. 
+
+&lt;/li&gt;&lt;li&gt;&lt;em&gt;Forecasted meteorological time series over a seven-day forecast horizon&lt;/em&gt;: Used as input for the forecast LSTM. These data are the same meteorological variables listed above, and come from the &lt;a href=&#34;https://www.ecmwf.int/en/forecasts/datasets/set-i&#34;&gt;ECMWF HRES atmospheric model&lt;/a&gt;.
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;
+Training data are daily streamflow values from the &lt;a href=&#34;https://www.bafg.de/GRDC/EN/Home/homepage_node.html&#34;&gt;Global Runoff Data Center&lt;/a&gt; over the time period 1980 - 2023. A single streamflow forecast model is trained using data from 5,680 diverse watershed streamflow gauges (shown below) to improve &lt;a href=&#34;https://eartharxiv.org/repository/view/6363/&#34;&gt;accuracy&lt;/a&gt;.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJZa8BMczHa_WiWNB1FJvPgEcw5O6U_IumoXBvI3gB_cIqrbte2SZKu_Msr1MudCVPv3YF6L3BweAC0hhMkET634isx6xzUswrYfDwp8oueoWJ7c3hf0os-RIsaNrdgAboc7HUly0rGtuBt6OVQ-MnY5P44DKOXSHKYl_T-gMz5z0ek8CHk0lIx45fnZYU/s1417/gauge_locations_map(1).jpg&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhJZa8BMczHa_WiWNB1FJvPgEcw5O6U_IumoXBvI3gB_cIqrbte2SZKu_Msr1MudCVPv3YF6L3BweAC0hhMkET634isx6xzUswrYfDwp8oueoWJ7c3hf0os-RIsaNrdgAboc7HUly0rGtuBt6OVQ-MnY5P44DKOXSHKYl_T-gMz5z0ek8CHk0lIx45fnZYU/s16000/gauge_locations_map(1).jpg&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Location of 5,680 streamflow gauges that supply training data for the river forecast model from the &lt;a href=&#34;https://www.bafg.de/GRDC/EN/Home/homepage_node.html&#34;&gt;Global Runoff Data Center&lt;/a&gt;.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;br /&gt;
+  
+  
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;  
+&lt;h2&gt;Improving on the current state-of-the-art&lt;/h2&gt;
+
+
+&lt;p&gt;
+We compared our river forecast model with &lt;a href=&#34;https://www.globalfloods.eu/&#34;&gt;GloFAS version 4&lt;/a&gt;, the current state-of-the-art global flood forecasting system. These experiments showed that ML can provide accurate warnings earlier and over larger and more impactful events. 
+&lt;/p&gt;
+
+&lt;p&gt;
+The figure below shows the distribution of &lt;a href=&#34;https://en.wikipedia.org/wiki/F-score&#34;&gt;F1 scores&lt;/a&gt; when predicting different severity events at river locations around the world, with plus or minus 1 day accuracy. F1 scores are an average of precision and recall and event severity is measured by &lt;a href=&#34;https://en.wikipedia.org/wiki/Return_period#:~:text=A%20return%20period%2C%20also%20known,river%20discharge%20flows%20to%20occur.&#34;&gt;return period&lt;/a&gt;. For example, a 2-year return period event is a volume of streamflow that is expected to be exceeded on average once every two years. Our model achieves reliability scores at up to 4-day or 5-day lead times that are similar to or better, on average, than the reliability of GloFAS nowcasts (0-day lead time). 
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgjwzwV6QYl4yIlWs1xdHz2HRiNi2I8WUaTGBVlVvA4guppIGpJ3RMj8ypE7chWz8sV5KJuS4dPe9PUd6TqWe46W8Yelga1Nq28Mts72zqJhLJXDgMjSa6VCHlb9ZH3eo8XETWSqj8lNraejCAezFpkGpfJrPIl4xMhRPHSdO1WX7bZmVSLDFMZOwMfarb5/s3908/Distributions%20of%20F1%20scores%20over%202-year%20.jpeg&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgjwzwV6QYl4yIlWs1xdHz2HRiNi2I8WUaTGBVlVvA4guppIGpJ3RMj8ypE7chWz8sV5KJuS4dPe9PUd6TqWe46W8Yelga1Nq28Mts72zqJhLJXDgMjSa6VCHlb9ZH3eo8XETWSqj8lNraejCAezFpkGpfJrPIl4xMhRPHSdO1WX7bZmVSLDFMZOwMfarb5/s16000/Distributions%20of%20F1%20scores%20over%202-year%20.jpeg&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Distributions of &lt;a href=&#34;https://en.wikipedia.org/wiki/F-score&#34;&gt;F1 scores&lt;/a&gt; over 2-year return period events in 2,092 watersheds globally during the time period 2014-2023 from GloFAS (&lt;strong&gt;blue&lt;/strong&gt;) and our model (&lt;strong&gt;orange&lt;/strong&gt;) at different lead times. On average, our model is statistically as accurate as GloFAS nowcasts (0–day lead time) up to 5 days in advance over 2-year (shown) and 1-year, 5-year, and 10-year events (not shown).&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+Additionally (not shown), our model achieves accuracies over larger and rarer extreme events, with precision and recall scores over 5-year return period events that are similar to or better than GloFAS accuracies over 1-year return period events. See the &lt;a href=&#34;https://www.nature.com/articles/s41586-024-07145-1&#34;&gt;paper&lt;/a&gt; for more information.
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Looking into the future&lt;/h2&gt;
+
+
+&lt;p&gt;
+The flood forecasting initiative is part of our &lt;a href=&#34;https://blog.google/outreach-initiatives/sustainability/google-ai-climate-change-solutions/&#34;&gt;Adaptation and Resilience efforts&lt;/a&gt; and reflects Google&#39;s commitment&amp;nbsp;&lt;a href=&#34;https://research.google/teams/climate-and-sustainability/&#34;&gt;to address climate change&lt;/a&gt; while helping global communities become more resilient. We believe that AI and ML will continue to play a critical role in helping advance science and research towards climate action.
+&lt;/p&gt;
+
+&lt;p&gt;
+We actively &lt;a href=&#34;https://blog.google/outreach-initiatives/sustainability/4-flood-forecasting-collaboration-case-studies-show-how-ai-can-help-communities-in-need/&#34;&gt;collaborate&lt;/a&gt; with several international aid organizations (e.g., the Centre for Humanitarian Data and the Red Cross) to provide actionable flood forecasts. Additionally, in an ongoing collaboration with the &lt;a href=&#34;https://wmo.int/&#34;&gt;World Meteorological Organization&lt;/a&gt; (WMO) to &lt;a href=&#34;https://blog.google/outreach-initiatives/sustainability/early-warning-system-wmo-google/&#34;&gt;support early warning systems&lt;/a&gt; for climate hazards, we are conducting a study to help understand how AI can help address real-world challenges faced by national flood forecasting agencies. 
+&lt;/p&gt;
+
+&lt;p&gt;
+While the work presented here demonstrates a significant step forward in flood forecasting, future work  is needed to further expand flood forecasting coverage to more locations globally and other types of flood-related events and disasters, including flash floods and urban floods. We are looking forward to continuing collaborations with our partners in the academic and expert communities, local governments and the industry to reach these goals. 
+&lt;/p&gt;</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> Google AI Blog</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2024-03-20 16:06:00</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 09:32:46.521100</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Google AI (noreply@blogger.com)&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of Using AI to expand g...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

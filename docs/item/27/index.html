@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Signal Digest</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .badge-status {
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">🤖 AI Signal Digest</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../content/index.html">All Content</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../relevant/index.html">Relevant</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../synthesized/index.html">Synthesized</a>
+                    </li>
+                </ul>
+                <form action="/run_pipeline" method="POST" class="d-flex">
+                    <button class="btn btn-primary btn-sm" type="submit">▶ Run Pipeline</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        
+<div class="row">
+    <div class="col-md-12">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary mb-3">← Back</a>
+
+        <div class="card">
+            <div class="card-header bg-light">
+                <h3>AutoBNN: Probabilistic time series forecasting with compositional bayesian neural networks</h3>
+                <a href="http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html" target="_blank" class="text-muted">http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html</a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5>Abstract / Content</h5>
+                        <p style="white-space: pre-line;">&lt;span class=&#34;byline-author&#34;&gt;Posted by Urs Köster, Software Engineer, Google Research&lt;/span&gt;
+
+&lt;img src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgd5Wc54p1HvgIokpazxDsMo1u6i9wg3ovpNOiFc4-wYwebETvjs9-hm2wxZ4osNbBAxhet8To3hwGg-whFScksHQB_BP1kS4Z8Cu7FQT2bjVtJl4trPid-OxCyYocwyRTN66tuvAedu9z0FepBg4zZvmLbLxY6uuib8p5jVH2kfb3RxT_HMABsKMXuSFXr/s320/AutoBNN.jpg&#34; style=&#34;display: none;&#34; /&gt;
+
+&lt;p&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Time_series&#34;&gt;Time series&lt;/a&gt; problems are ubiquitous, from forecasting weather and traffic patterns to understanding economic trends. &lt;a href=&#34;https://en.wikipedia.org/wiki/Bayesian_inference&#34;&gt;Bayesian&lt;/a&gt; approaches start with an assumption about the data&#39;s patterns (prior probability), collecting evidence (e.g., new time series data), and continuously updating that assumption to form a posterior probability distribution. Traditional Bayesian approaches like &lt;a href=&#34;https://gaussianprocess.org/gpml/&#34;&gt;Gaussian processes&lt;/a&gt; (GPs) and &lt;a href=&#34;https://blog.tensorflow.org/2019/03/structural-time-series-modeling-in.html&#34;&gt;Structural Time Series&lt;/a&gt; are extensively used for modeling time series data, e.g., the commonly used &lt;a href=&#34;https://gml.noaa.gov/ccgg/trends/&#34;&gt;Mauna Loa CO2&lt;/a&gt; dataset. However, they often rely on domain experts to painstakingly select appropriate model components and may be computationally expensive. Alternatives such as neural networks lack interpretability, making it difficult to understand how they generate forecasts, and don&#39;t produce reliable confidence intervals. 
+&lt;/p&gt;
+&lt;a name=&#34;more&#34;&gt;&lt;/a&gt;
+&lt;p&gt;
+To that end, we introduce &lt;a href=&#34;https://github.com/tensorflow/probability/tree/main/spinoffs/autobnn&#34;&gt;AutoBNN&lt;/a&gt;, a new open-source package written in &lt;a href=&#34;https://github.com/google/jax&#34;&gt;JAX&lt;/a&gt;. AutoBNN automates the discovery of interpretable time series forecasting models, provides high-quality uncertainty estimates, and scales effectively for use on large datasets. We describe how AutoBNN combines the interpretability of traditional probabilistic approaches with the scalability and flexibility of neural networks.
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;AutoBNN&lt;/h2&gt;
+
+
+&lt;p&gt;
+AutoBNN is based on a &lt;a href=&#34;https://proceedings.mlr.press/v28/duvenaud13.html&#34;&gt;line&lt;/a&gt; &lt;a href=&#34;https://royalsocietypublishing.org/doi/10.1098/rsta.2011.0550&#34;&gt;of&lt;/a&gt; &lt;a href=&#34;https://proceedings.mlr.press/v202/saad23a.html&#34;&gt;research&lt;/a&gt; that over the past decade has yielded improved predictive accuracy by modeling time series using GPs with learned &lt;a href=&#34;https://www.cs.toronto.edu/~duvenaud/cookbook/&#34;&gt;kernel&lt;/a&gt; structures. The kernel function of a GP encodes assumptions about the function being modeled, such as the presence of trends, periodicity or noise.  With learned GP kernels, the kernel function is defined compositionally: it is either a base kernel (such as &lt;code&gt;Linear&lt;/code&gt;, &lt;code&gt;Quadratic&lt;/code&gt;, &lt;code&gt;Periodic&lt;/code&gt;, &lt;code&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Mat%C3%A9rn_covariance_function&#34;&gt;Matérn&lt;/a&gt;&lt;/code&gt; or &lt;code&gt;ExponentiatedQuadratic&lt;/code&gt;) or a composite that combines two or more kernel functions using operators such as &lt;code&gt;Addition&lt;/code&gt;, &lt;code&gt;Multiplication&lt;/code&gt;, or &lt;code&gt;&lt;a href=&#34;https://icml.cc/Conferences/2010/papers/170.pdf&#34;&gt;ChangePoint&lt;/a&gt;&lt;/code&gt;. This compositional kernel structure serves two related purposes. First, it is simple enough that a user who is an expert about their data, but not necessarily about GPs, can construct a reasonable prior for their time series. Second, techniques like &lt;a href=&#34;https://www.stats.ox.ac.uk/~doucet/doucet_defreitas_gordon_smcbookintro.pdf&#34;&gt;Sequential Monte Carlo&lt;/a&gt; can be used for discrete searches over small structures and can output interpretable results.&lt;/p&gt;
+
+&lt;p&gt;
+AutoBNN improves upon these ideas, replacing the GP with &lt;a href=&#34;https://www.cs.toronto.edu/~duvenaud/distill_bayes_net/public/&#34;&gt;Bayesian neural networks&lt;/a&gt; (BNNs) while retaining the compositional kernel structure. A BNN is a neural network with a probability distribution over weights rather than a fixed set of weights. This induces a distribution over outputs, capturing uncertainty in the predictions. BNNs bring the following advantages over GPs: First, training large GPs is computationally expensive, and traditional training algorithms scale as the cube of the number of data points in the time series. In contrast, for a fixed width, training a BNN will often be approximately linear in the number of data points. Second, BNNs lend themselves better to GPU and &lt;a href=&#34;https://cloud.google.com/tpu?hl=en&#34;&gt;TPU&lt;/a&gt; hardware acceleration than GP training operations. Third, compositional BNNs can be easily combined with &lt;a href=&#34;https://arxiv.org/abs/2007.06823&#34;&gt;traditional deep BNNs&lt;/a&gt;, which have the ability to do feature discovery. One could imagine &#34;hybrid&#34; architectures, in which users specify a top-level structure of &lt;code&gt;Add&lt;/code&gt;(&lt;code&gt;Linear&lt;/code&gt;, &lt;code&gt;Periodic&lt;/code&gt;, &lt;code&gt;Deep&lt;/code&gt;), and the deep BNN is left to learn the contributions from potentially high-dimensional covariate information.
+&lt;/p&gt;
+
+&lt;p&gt;
+How might one translate a GP with compositional kernels into a BNN then? A single layer neural network will typically converge to a GP as the number of neurons (or &#34;width&#34;) &lt;a href=&#34;https://link.springer.com/chapter/10.1007/978-1-4612-0745-0_2&#34;&gt;goes to infinity&lt;/a&gt;. More recently, researchers have &lt;a href=&#34;https://openreview.net/forum?id=gRwh5HkdaTm&#34;&gt;discovered&lt;/a&gt; a correspondence in the other direction — many popular GP &lt;a href=&#34;https://www.cs.toronto.edu/~duvenaud/cookbook/&#34;&gt;kernels&lt;/a&gt; (such as &lt;code&gt;Matern&lt;/code&gt;, &lt;code&gt;ExponentiatedQuadratic&lt;/code&gt;, &lt;code&gt;Polynomial&lt;/code&gt; or &lt;code&gt;Periodic&lt;/code&gt;) can be obtained as infinite-width BNNs with appropriately chosen activation functions and weight distributions. Furthermore, these BNNs remain close to the corresponding GP even when the width is very much less than infinite. For example, the figures below show the difference in the &lt;a href=&#34;https://en.wikipedia.org/wiki/Covariance_matrix#:~:text=In%20probability%20theory%20and%20statistics,of%20a%20given%20random%20vector&#34;&gt;covariance&lt;/a&gt; between pairs of observations, and &lt;a href=&#34;https://en.wikipedia.org/wiki/Kriging&#34;&gt;regression&lt;/a&gt; results of the true GPs and their corresponding width-10 neural network versions.
+&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHJ7hHI33S76Id3RrWCYezQKky9oELeuWf_CTm7GYadxpV7-B9GSQKCZgTmVQABi9zpWcEK8uvTYITyX2_jcbv_qF-eGv2C1QkU9oDCAS09FfoCne81yEAqC5moTNIqsn05aHfWNr8uy48N3UfV_tRGOyGrrQvB8l7RegzAq5_LNK2W8_Y_gSavdfi5aDI/s1350/image3.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHJ7hHI33S76Id3RrWCYezQKky9oELeuWf_CTm7GYadxpV7-B9GSQKCZgTmVQABi9zpWcEK8uvTYITyX2_jcbv_qF-eGv2C1QkU9oDCAS09FfoCne81yEAqC5moTNIqsn05aHfWNr8uy48N3UfV_tRGOyGrrQvB8l7RegzAq5_LNK2W8_Y_gSavdfi5aDI/s16000/image3.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Comparison of &lt;a href=&#34;https://en.wikipedia.org/wiki/Gram_matrix&#34;&gt;Gram matrices&lt;/a&gt; between true GP kernels (top row) and their width 10 neural network approximations (bottom row).&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoidYqlAK2J1n4y71Qn-WuIcmaxGI9ynwSjtHAvyukuY_q5QcX4pVEheX2pwMxIhkAu7_OZR-0s7N7e-cU-caromj1wntP7E1txZfxHqh2yeTedusA90k9hFZ2yvzEZmC2QlPyR7trgVuMro-MoicBxpAbrkQXs2F9h1uux3AXzUENmJ0NA8Ch9dyICT15/s1328/image4.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhoidYqlAK2J1n4y71Qn-WuIcmaxGI9ynwSjtHAvyukuY_q5QcX4pVEheX2pwMxIhkAu7_OZR-0s7N7e-cU-caromj1wntP7E1txZfxHqh2yeTedusA90k9hFZ2yvzEZmC2QlPyR7trgVuMro-MoicBxpAbrkQXs2F9h1uux3AXzUENmJ0NA8Ch9dyICT15/s16000/image4.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Comparison of regression results between true GP kernels (top row) and their width 10 neural network approximations (bottom row).&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+
+&lt;p&gt;
+Finally, the translation is completed with &lt;a href=&#34;https://arxiv.org/abs/1905.06076&#34;&gt;BNN analogues&lt;/a&gt; of the &lt;code&gt;Addition&lt;/code&gt; and &lt;code&gt;Multiplication&lt;/code&gt; operators over GPs, and input warping to produce periodic kernels. BNN addition is straightforwardly given by adding the outputs of the component BNNs. BNN multiplication is achieved by multiplying the activations of the hidden layers of the BNNs and then applying a shared dense layer. We are therefore limited to only multiplying BNNs with the same hidden width.
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Using AutoBNN&lt;/h2&gt;
+
+
+&lt;p&gt;
+The AutoBNN &lt;a href=&#34;https://github.com/tensorflow/probability/tree/main/spinoffs/autobnn&#34;&gt;package&lt;/a&gt; is available within &lt;a href=&#34;https://www.tensorflow.org/probability&#34;&gt;Tensorflow Probability&lt;/a&gt;. It is implemented in &lt;a href=&#34;https://github.com/google/jax&#34;&gt;JAX&lt;/a&gt; and uses the &lt;a href=&#34;https://github.com/google/flax&#34;&gt;flax.linen&lt;/a&gt; neural network library. It implements all of the base kernels and operators discussed so far (&lt;code&gt;Linear&lt;/code&gt;, &lt;code&gt;Quadratic&lt;/code&gt;, &lt;code&gt;Matern&lt;/code&gt;, &lt;code&gt;ExponentiatedQuadratic&lt;/code&gt;, &lt;code&gt;Periodic&lt;/code&gt;, &lt;code&gt;Addition&lt;/code&gt;, &lt;code&gt;Multiplication&lt;/code&gt;) plus one new kernel and three new operators:  
+&lt;/p&gt;
+
+&lt;ul&gt;
+
+&lt;li&gt;a &lt;code&gt;OneLayer&lt;/code&gt; kernel, a single hidden layer &lt;a href=&#34;https://en.wikipedia.org/wiki/Rectifier_(neural_networks)&#34;&gt;ReLU&lt;/a&gt; BNN,
+
+&lt;/li&gt;&lt;li&gt;a &lt;code&gt;&lt;a href=&#34;https://icml.cc/Conferences/2010/papers/170.pdf&#34;&gt;ChangePoint&lt;/a&gt;&lt;/code&gt; operator that allows smoothly switching between two kernels,
+
+&lt;/li&gt;&lt;li&gt;a &lt;code&gt;LearnableChangePoint&lt;/code&gt; operator which is the same as &lt;code&gt;ChangePoint&lt;/code&gt; except position and slope are given prior distributions and can be learnt from the data, and
+
+&lt;/li&gt;&lt;li&gt;a &lt;code&gt;WeightedSum&lt;/code&gt; operator.
+&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;
+&lt;code&gt;WeightedSum&lt;/code&gt; combines two or more BNNs with learnable mixing weights, where the learnable weights follow a &lt;a href=&#34;https://en.wikipedia.org/wiki/Dirichlet_distribution&#34;&gt;Dirichlet prior&lt;/a&gt;. By default, a flat Dirichlet distribution with concentration 1.0 is used.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;code&gt;WeightedSums&lt;/code&gt; allow a &#34;soft&#34; version of structure discovery, i.e., training a linear combination of many possible models at once. In contrast to structure discovery with discrete structures, such as in &lt;a href=&#34;https://proceedings.mlr.press/v202/saad23a.html&#34;&gt;AutoGP&lt;/a&gt;, this allows us to use standard gradient methods to learn structures, rather than using expensive discrete optimization. Instead of evaluating potential combinatorial structures in series, WeightedSum allows us to evaluate them in parallel. 
+&lt;/p&gt;
+
+&lt;p&gt;
+To easily enable exploration, AutoBNN defines a &lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/spinoffs/autobnn/autobnn/models.py&#34;&gt;number of model structures&lt;/a&gt; that contain either top-level or internal &lt;code&gt;WeightedSums&lt;/code&gt;. The names of these models can be used as the first parameter in any of the &lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/spinoffs/autobnn/autobnn/estimators.py&#34;&gt;estimator&lt;/a&gt; constructors, and include things like &lt;code&gt;&lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/spinoffs/autobnn/autobnn/models.py#L133&#34;&gt;sum_of_stumps&lt;/a&gt;&lt;/code&gt; (the &lt;code&gt;WeightedSum&lt;/code&gt; over all the base kernels) and &lt;code&gt;sum_of_shallow&lt;/code&gt; (which adds all possible combinations of base kernels with all operators).&lt;/p&gt;
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNmWFuh7tVRkaF9o4nr3Fu7B2CNmXpDkGx8_9fMASh2olAfjlSdBXLj-0cgh7UIVWs6fHlNyyCvRPA_vc4eq-3lixkC2VXzCeSCZBFDHIc1qYfK53EwEdngf1KykzCfpPiIg3YoN46AZkBSSmCLrgPXX84PaZp_cxLrNnmojz2S6pLOCmTTT2niRi8Qfe5/s1389/image2.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNmWFuh7tVRkaF9o4nr3Fu7B2CNmXpDkGx8_9fMASh2olAfjlSdBXLj-0cgh7UIVWs6fHlNyyCvRPA_vc4eq-3lixkC2VXzCeSCZBFDHIc1qYfK53EwEdngf1KykzCfpPiIg3YoN46AZkBSSmCLrgPXX84PaZp_cxLrNnmojz2S6pLOCmTTT2niRi8Qfe5/s16000/image2.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Illustration of the &lt;code&gt;sum_of_stumps&lt;/code&gt; model. The bars in the top row show the amount by which each base kernel contributes, and the bottom row shows the function represented by the base kernel. The resulting weighted sum is shown on the right.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+&lt;p&gt;
+The figure below demonstrates the technique of structure discovery on the N374 (a time series of yearly financial data starting from 1949) from the &lt;a href=&#34;https://forecasters.org/resources/time-series-data/m3-competition/&#34;&gt;M3&lt;/a&gt; dataset. The six base structures were &lt;code&gt;ExponentiatedQuadratic&lt;/code&gt; (which is the same as the Radial Basis Function kernel, or &lt;a href=&#34;https://en.wikipedia.org/wiki/Radial_basis_function_kernel&#34;&gt;RBF&lt;/a&gt; for short), &lt;code&gt;Matern&lt;/code&gt;, &lt;code&gt;Linear&lt;/code&gt;, &lt;code&gt;Quadratic&lt;/code&gt;, &lt;code&gt;OneLayer&lt;/code&gt; and &lt;code&gt;Periodic&lt;/code&gt; kernels. The figure shows the MAP estimates of their weights over an ensemble of 32 particles. All of the high likelihood particles gave a large weight to the &lt;code&gt;Periodic&lt;/code&gt; component, low weights to &lt;code&gt;Linear&lt;/code&gt;, &lt;code&gt;Quadratic&lt;/code&gt; and &lt;code&gt;OneLayer&lt;/code&gt;, and a large weight to either &lt;code&gt;RBF&lt;/code&gt; or &lt;code&gt;Matern&lt;/code&gt;.
+&lt;/p&gt;
+
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_5mU3VknB1oyCwNdCQj9kWTVV5J0BuylHB8W2LUK4sT6JpkOWdluZwh8_fKvRN5eSo2xBbQ0pRxDYa86IqML9H2-JZOmxxRJSm9ExG_PUr6U7iFl8nyp4lEaNpG3guYov3hPP3l9zifdu_iv_5aeP05OftccGqwJ7D0WAeMox_aWMGm3hN5nOkrj4BPxU/s868/image5.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_5mU3VknB1oyCwNdCQj9kWTVV5J0BuylHB8W2LUK4sT6JpkOWdluZwh8_fKvRN5eSo2xBbQ0pRxDYa86IqML9H2-JZOmxxRJSm9ExG_PUr6U7iFl8nyp4lEaNpG3guYov3hPP3l9zifdu_iv_5aeP05OftccGqwJ7D0WAeMox_aWMGm3hN5nOkrj4BPxU/s16000/image5.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Parallel coordinates plot of the &lt;a href=&#34;https://www.probabilitycourse.com/chapter9/9_1_2_MAP_estimation.php&#34;&gt;MAP&lt;/a&gt; estimates of the base kernel weights over 32 particles. The &lt;code&gt;sum_of_stumps&lt;/code&gt; model was trained on the N374 series from the M3 dataset (insert in blue). Darker lines correspond to particles with higher likelihoods.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+By using &lt;code&gt;WeightedSums&lt;/code&gt; as the inputs to other operators, it is possible to express rich combinatorial structures, while keeping models compact and the number of learnable weights small. As an example, we include the &lt;code&gt;sum_of_products&lt;/code&gt; model (illustrated in the figure below) which first creates a pairwise product of two &lt;code&gt;WeightedSums&lt;/code&gt;, and then a sum of the two products. By setting some of the weights to zero, we can create many different discrete structures. The total number of possible structures in this model is 2&lt;sup&gt;16&lt;/sup&gt;, since there are 16 base kernels that can be turned on or off. All these structures are explored implicitly by training just this one model.
+&lt;/p&gt;
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9VhSV6af55mkKxUKzpJJrqQiAV6WUWJ8HY9Q-5qcPB_mr8_P0lvrcGGkEUNe_-UB6Ri5VgWFkdHvRwEe7snZucQtvzMR_548jt4h2lbTzfnp7ZUeYFDmas7LwKc_9UAzdLE4gr8g9pVVkMXy9GU8qMUzrKfd9tjDEc2C4Ub6aXDzjHf2FjCryg_pWu39E/s1754/AutoBNN%20illustration.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9VhSV6af55mkKxUKzpJJrqQiAV6WUWJ8HY9Q-5qcPB_mr8_P0lvrcGGkEUNe_-UB6Ri5VgWFkdHvRwEe7snZucQtvzMR_548jt4h2lbTzfnp7ZUeYFDmas7LwKc_9UAzdLE4gr8g9pVVkMXy9GU8qMUzrKfd9tjDEc2C4Ub6aXDzjHf2FjCryg_pWu39E/s16000/AutoBNN%20illustration.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Illustration of the &#34;sum_of_products&#34; model. Each of the four WeightedSums have the same structure as the &#34;sum_of_stumps&#34; model.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+We have found, however, that certain combinations of kernels (e.g., the product of &lt;code&gt;Periodic&lt;/code&gt; and either the &lt;code&gt;Matern&lt;/code&gt; or &lt;code&gt;ExponentiatedQuadratic&lt;/code&gt;) lead to overfitting on many datasets. To prevent this, we have defined model classes like &lt;code&gt;sum_of_safe_shallow&lt;/code&gt; that exclude such products when performing structure discovery with &lt;code&gt;WeightedSums&lt;/code&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+For training, AutoBNN provides &lt;code&gt;AutoBnnMapEstimator&lt;/code&gt; and &lt;code&gt;AutoBnnMCMCEstimator&lt;/code&gt; to perform MAP and MCMC inference, respectively. Either estimator can be combined with any of the six &lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/spinoffs/autobnn/autobnn/likelihoods.py&#34;&gt;likelihood functions&lt;/a&gt;, including four based on normal distributions with different noise characteristics for continuous data and two based on the negative binomial distribution for count data.  
+&lt;/p&gt;
+
+
+
+&lt;table align=&#34;center&#34; cellpadding=&#34;0&#34; cellspacing=&#34;0&#34; class=&#34;tr-caption-container&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td style=&#34;text-align: center;&#34;&gt;&lt;a href=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVzVWT-e-lcT53h75r2QJpR7iH9FAgCkpQY_oBNq7o1YoO4TkJ2GVpXLYcyY3RjOfgaXRM2LRII_jK31PbxTQF29yH1cTJRdI-XkXmnZMR_imlFv0uOuIPni3nW_vb1ercfuJuKHbrbuIA4bVR5EuGTs5iUHRXs-4WaA9wFEX54RwOJQt0BGMGfkNW4kxn/s1076/image1.png&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;&lt;img border=&#34;0&#34; src=&#34;https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgVzVWT-e-lcT53h75r2QJpR7iH9FAgCkpQY_oBNq7o1YoO4TkJ2GVpXLYcyY3RjOfgaXRM2LRII_jK31PbxTQF29yH1cTJRdI-XkXmnZMR_imlFv0uOuIPni3nW_vb1ercfuJuKHbrbuIA4bVR5EuGTs5iUHRXs-4WaA9wFEX54RwOJQt0BGMGfkNW4kxn/s16000/image1.png&#34; /&gt;&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&#34;tr-caption&#34; style=&#34;text-align: center;&#34;&gt;Result from running AutoBNN on the &lt;a href=&#34;https://gml.noaa.gov/ccgg/trends/&#34;&gt;Mauna Loa CO2&lt;/a&gt; dataset in our example &lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/discussion/examples/Forecasting_With_AutoBNN.ipynb&#34;&gt;colab&lt;/a&gt;. The model captures the trend and seasonal component in the data. Extrapolating into the future, the mean prediction slightly underestimates the actual trend, while the 95% confidence interval gradually increases.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+
+
+&lt;p&gt;
+To fit a model like in the figure above, all it takes is the following 10 lines of code, using the &lt;a href=&#34;https://scikit-learn.org/stable/&#34;&gt;scikit-learn&lt;/a&gt;–inspired estimator interface:&lt;/p&gt;
+
+
+&lt;pre class=&#34;prettyprint&#34;&gt;import autobnn as ab
+
+model = ab.operators.Add(
+    bnns=(ab.kernels.PeriodicBNN(width=50),
+          ab.kernels.LinearBNN(width=50),
+          ab.kernels.MaternBNN(width=50)))
+
+estimator = ab.estimators.AutoBnnMapEstimator(
+    model, &#39;normal_likelihood_logistic_noise&#39;, jax.random.PRNGKey(42),
+    periods=[12])
+
+estimator.fit(my_training_data_xs, my_training_data_ys)
+low, mid, high = estimator.predict_quantiles(my_training_data_xs)
+&lt;/pre&gt;
+
+&lt;br /&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+
+
+&lt;p&gt;
+&lt;a href=&#34;https://github.com/tensorflow/probability/tree/main/spinoffs/autobnn&#34;&gt;AutoBNN&lt;/a&gt; provides a powerful and flexible framework for building sophisticated time series prediction models. By combining the strengths of BNNs and GPs with compositional kernels, AutoBNN opens a world of possibilities for understanding and forecasting complex data. We invite the community to try the&amp;nbsp;&lt;a href=&#34;https://github.com/tensorflow/probability/blob/main/discussion/examples/Forecasting_With_AutoBNN.ipynb&#34; target=&#34;_blank&#34;&gt;colab&lt;/a&gt;, and leverage this library to innovate and solve real-world challenges. 
+&lt;/p&gt;
+
+&lt;div style=&#34;line-height: 40%;&#34;&gt;
+    &lt;br /&gt;
+&lt;/div&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+
+
+&lt;p&gt;
+&lt;em&gt;AutoBNN was written by Colin Carroll, Thomas Colthurst, Urs Köster and Srinivas Vasudevan. We would like to thank Kevin Murphy, Brian Patton and Feras Saad for their advice and feedback.&lt;/em&gt;
+&lt;/p&gt;&lt;p&gt;&lt;/p&gt;</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Metadata</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Source:</strong> Google AI Blog</li>
+                                <li class="list-group-item"><strong>Published:</strong> 2024-03-28 20:53:00</li>
+                                <li class="list-group-item"><strong>Fetched:</strong> 2026-02-14 09:32:46.519769</li>
+                                <li class="list-group-item"><strong>Authors:</strong> [&#39;Google AI (noreply@blogger.com)&#39;]</li>
+                            </ul>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">AI Analysis</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Label:</strong> FOUNDATION_MODELS</li>
+                                <li class="list-group-item"><strong>Conf:</strong> 0.9</li>
+                                <li class="list-group-item"><strong>Priority:</strong> 1.0</li>
+                                <li class="list-group-item"><strong>Reason:</strong> Mock decision (No API Key)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-success">
+            <div class="card-header bg-success text-white">Generated Insight</div>
+            <div class="card-body">
+                <h4>Summary of AutoBNN: Probabilist...</h4>
+                <p><strong>TL;DR:</strong> This is a mock summary because no API key is present.</p>
+                <ul>
+                    
+                    <li>Point 1</li>
+                    
+                    <li>Point 2</li>
+                    
+                </ul>
+                <p class="text-muted"><em>Why it matters: It matters because we need to test.</em></p>
+                <hr>
+                <p><strong>Validation:</strong> PASS</p>
+                <p><strong>Delivery:</strong> SENT</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,8 @@
 import json
+import uuid
 from typing import List
 from tenacity import retry, stop_after_attempt, wait_exponential
+from sqlalchemy import desc
 
 from src.core.database import SessionLocal
 from src.core.models import Content
@@ -18,7 +20,8 @@ class ContextEnrichmentAgent(BaseAgent):
     """
     Enriches content with:
     1. Embeddings (Vector)
-    2. Extracted Entities (Models, Orgs - regex or LLM based)
+    2. Extracted Entities (Models, Orgs)
+    3. Semantic Clustering (deduplication)
     """
 
     def _execute(self):
@@ -26,14 +29,9 @@ class ContextEnrichmentAgent(BaseAgent):
         processed_count = 0
         
         with SessionLocal() as db:
-            # Select items that have been fetched but not enriched (embedding is None)
-            # And optionally only those that are RELEVANT (to save cost)?
-            # Strategy: Enrich everything to allow search, or only relevant?
-            # Let's enrich only RELEVANT items for now to save cost, or all? 
-            # If IRRELEVANT, we might not care.
-            # But maybe we want to search irrelevant items too?
-            # Let's stick to enriching items where relevance_label != 'IRRELEVANT' (or all if we want filtering later).
-            # For efficiency: Enrich ONLY Relevant items.
+            # Select items (Relevant) that are not enriched OR not clustered
+            # For MVP simplicity, we process items where embedding is None (new items).
+            # We assume if embedding is None, clustering is also needed.
             
             pending_items = db.query(Content).filter(
                 Content.relevance_label.isnot(None), 
@@ -46,11 +44,13 @@ class ContextEnrichmentAgent(BaseAgent):
                     # 1. Generate Embedding
                     item.embedding_vector = self.generate_embedding(item.title + "\n" + (item.abstract_or_body or ""))
                     
-                    # 2. Extract Entities (Simple keyword matching for now, or LLM)
-                    # For MVP, let's use a placeholder list or simple extraction
+                    # 2. Extract Entities
                     item.topics = self.extract_topics(item.abstract_or_body or "")
+
+                    # 3. Assign Cluster
+                    self.assign_cluster(db, item)
                     
-                    self.logger.info(f"Enriched {item.id}")
+                    self.logger.info(f"Enriched {item.id} (Cluster: {item.cluster_id})")
                     processed_count += 1
                 except Exception as e:
                     self.logger.error(f"Failed to enrich {item.id}: {e}")
@@ -68,7 +68,6 @@ class ContextEnrichmentAgent(BaseAgent):
         # Mock if no key
         if not openai_client:
             # return deterministic mock vector of dim 1536 (OpenAI standard)
-            # Just return a small one for testing
             return [0.1] * 10 
             
         text = text[:8000] # Truncate to avoid token limits
@@ -85,6 +84,57 @@ class ContextEnrichmentAgent(BaseAgent):
         keywords = ["LLM", "Transformer", "Generative AI", "Reinforcement Learning", "Vision", "Agent", "Ethics"]
         found = [k for k in keywords if k.lower() in text.lower()]
         return found
+    
+    def assign_cluster(self, db, item: Content):
+        """
+        Assigns a cluster_id. 
+        Checks against recent items for duplicate/similar content.
+        """
+        # Look back 50 recent items that have a cluster_id
+        recent_items = db.query(Content).filter(
+            Content.cluster_id.isnot(None),
+            Content.id != item.id
+        ).order_by(desc(Content.id)).limit(50).all()
+        
+        best_match = None
+        max_score = 0.0
+        
+        for candidate in recent_items:
+            # Jaccard Similarity on Title
+            score = self.jaccard_similarity(item.title, candidate.title)
+            
+            # Boost if URL is identical (dedup) - though AcqAgent handles exact URL dedup
+            if item.url == candidate.url:
+                score = 1.0
+                
+            if score > max_score:
+                max_score = score
+                best_match = candidate
+        
+        # Threshold for "Same Topic"
+        if max_score > 0.4: # 40% word overlap in title is decent for "same news"
+            item.cluster_id = best_match.cluster_id
+            self.logger.info(f"Clustered {item.id} with {best_match.id} (Score: {max_score:.2f})")
+        else:
+            item.cluster_id = str(uuid.uuid4())
+
+    def jaccard_similarity(self, s1: str, s2: str) -> float:
+        """
+        Calculates Jaccard similarity between two strings.
+        """
+        if not s1 or not s2:
+            return 0.0
+        
+        words1 = set(s1.lower().split())
+        words2 = set(s2.lower().split())
+        
+        intersection = len(words1.intersection(words2))
+        union = len(words1.union(words2))
+        
+        if union == 0:
+            return 0.0
+            
+        return intersection / union
 
 if __name__ == "__main__":
     agent = ContextEnrichmentAgent("test_enrichment")
